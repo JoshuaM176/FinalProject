@@ -8,8 +8,10 @@ public class MarketingAndSales extends Menu implements Option {
     public MarketingAndSales() {
         // Define options
         ViewBudget view_budget = new ViewBudget();
+        CreateAdvert createAdvert = new CreateAdvert();
         // Add options
         addOption(view_budget);
+        addOption(createAdvert);
     }
 
     @Override

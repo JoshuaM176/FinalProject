@@ -1,5 +1,6 @@
 package coms3620.fashion.util;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Stdin {
@@ -10,9 +11,18 @@ public class Stdin {
     }
 
     public static int nextInt() {
-        int rtn = scnr.nextInt();
-        scnr.nextLine();
-        return rtn;
+        while(true) {
+            try {
+                int rtn = scnr.nextInt();
+                scnr.nextLine();
+                return rtn;
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Please enter an integer");
+                scnr.nextLine();
+            }
+            
+        }
     }
 
 }
