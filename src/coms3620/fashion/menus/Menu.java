@@ -19,7 +19,7 @@ public abstract class Menu {
     private boolean selectOption() {
         System.out.println("0. Exit Menu");
         for(int i = 0; i < options.size(); i++) {
-            System.out.println(Integer.toString(i+1) + ". " + options.get(i).get_name());
+            System.out.println(Integer.toString(i+1) + ". " + options.get(i).getName());
         }
         int user_input;
         while(true) {

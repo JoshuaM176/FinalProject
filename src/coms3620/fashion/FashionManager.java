@@ -1,6 +1,5 @@
 package coms3620.fashion;
 
-
 import coms3620.fashion.menus.Menu;
 import coms3620.fashion.menus.marketing_and_sales.MarketingAndSales;
 

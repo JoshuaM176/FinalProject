@@ -4,7 +4,7 @@ import coms3620.fashion.menus.Option;
 
 public class ViewBudget implements Option{
     @Override
-    public String get_name() {
+    public String getName() {
         return "View Budget";
     }
 

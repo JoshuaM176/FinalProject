@@ -2,7 +2,6 @@ package coms3620.fashion.menus.marketing_and_sales;
 
 import coms3620.fashion.menus.Menu;
 import coms3620.fashion.menus.Option;
-import coms3620.fashion.menus.marketing_and_sales.ViewBudget;
 
 public class MarketingAndSales extends Menu implements Option {
 
@@ -14,7 +13,7 @@ public class MarketingAndSales extends Menu implements Option {
     }
 
     @Override
-    public String get_name() {
+    public String getName() {
         return "Marketing and Sales";
     }
 
