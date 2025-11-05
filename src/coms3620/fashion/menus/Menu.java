@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import coms3620.fashion.util.Stdin;
 
+//This menu class represents a basic menu, it contains a list of options that will be ran when selected
+//To make a submenu have a Menu that is also an option, and its run method should call its enter_menu method.
+//See menus/marketing_and_sales/MarketingAndSales.java for an example of a submenu
 public abstract class Menu {
 
     private final List<Option> options = new ArrayList<Option>();
