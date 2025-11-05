@@ -1,9 +1,15 @@
-package coms3620.fashion.menus.marketing_and_sales;
+package coms3620.fashion.menus.marketing_and_sales.manage_adverts;
 
 import coms3620.fashion.menus.Option;
 import coms3620.fashion.departments.marketing_and_sales.AdvertManager;
 
 public class CreateAdvert implements Option {
+
+    private AdvertManager advertManager;
+
+    public CreateAdvert(AdvertManager advertManager) {
+        this.advertManager = advertManager;
+    }
 
     @Override
     public String getName() {
@@ -12,8 +18,6 @@ public class CreateAdvert implements Option {
 
     @Override
     public void run() {
-        AdvertManager advertManager = new AdvertManager();
-        advertManager.loadData();
         advertManager.createAdvert();
         advertManager.saveData();
     }
