@@ -3,8 +3,6 @@ import coms3620.fashion.util.Stdin;
 import coms3620.fashion.util.InputValidation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 
 public class AdvertManager {
 
@@ -33,20 +31,8 @@ public class AdvertManager {
                 adverts.add(new TVCommerical(price_per_day, name));
                 break;
         }
-    }
-    
-    private abstract class Advert {
-        int price_per_day;
-        String name;
-        String type = "none";
-        UUID id;
-        boolean running = false;
-
-        private Advert(int price_per_day, String name) {
-            this.price_per_day = price_per_day;
-            this.name = name;
-            id = UUID.randomUUID();
-        }
+        //TODO add a way to add new options and organize selecting w/o case statements
+        //TODO allow adding links to media files for advert
     }
 
     private class MagazineAdvert extends Advert {
