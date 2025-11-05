@@ -73,7 +73,7 @@ public class AdvertManager {
     public String toString() {
         String string = "price_per_day, name, type, running, id\n";
         for(Advert advert : adverts) {
-            string += advert.price_per_day + ", "+ advert.name + ", " + advert.type + ", " + advert.running + ", " + advert.id;
+            string += advert.price_per_day + ", "+ advert.name + ", " + advert.type + ", " + advert.running + ", " + advert.id + "\n";
         }
         return string;
     }
