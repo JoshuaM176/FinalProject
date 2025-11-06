@@ -1,13 +1,19 @@
 package coms3620.fashion.departments.Logistics;
 
-public class Product {
+public class OrderLine {
+    private String name;
     private String sku;
     private String upc;
     private int quantity;
 
-    public Product(String sku, int quantity) {
+    public OrderLine(String name, String sku, int quantity) {
+        this.name = name;
         this.sku = sku;
         this.quantity = quantity;
+    }
+
+    public String getName() {
+        return name;
     }
     
     public String getSKU() {
@@ -22,7 +28,8 @@ public class Product {
         return this.quantity;
     }
 
+    @Override
     public String toString() {
-        return sku;
+        return name + " (" + sku + ")";
     }
 }

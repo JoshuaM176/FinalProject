@@ -6,12 +6,12 @@ import java.util.List;
 public class Order implements Trackable {
     enum Status {PENDING, EXPEDITED}
     private final String id;
-    private final List<Product> products;
+    private final List<OrderLine> orderLines;
     private Status status;
 
-    public Order(String id, List<Product> products) {
+    public Order(String id, List<OrderLine> orderLines) {
         this.id = id;
-        this.products = products;
+        this.orderLines = orderLines;
         this.status = Status.PENDING;
     }
 
@@ -27,7 +27,7 @@ public class Order implements Trackable {
 
     }
 
-    public List<Product> getProducts() {
-        return this.products;
+    public List<OrderLine> getOrderLines() {
+        return this.orderLines;
     }
 }

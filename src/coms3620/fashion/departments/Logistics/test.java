@@ -2,28 +2,32 @@ package coms3620.fashion.departments.Logistics;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class test {
 
     public static void main(String[] args) {
-        Product p1 = new Product("product", 4);
-        Product p2 = new Product("alsoProduct", 2);
+        OrderLine shirts = new OrderLine("Shirt", "1", 6);
+        OrderLine hats = new OrderLine("hat", "0", 2);
+        OrderLine pants = new OrderLine("pants", "9", 4);
 
-        List<Product> A = new ArrayList<>();
-        A.add(p1);
-        A.add(p2);
+        List<OrderLine> A = new ArrayList<>();
+        A.add(shirts);
+        A.add(hats);
 
-        Order o = new Order("", A);
+        List<OrderLine> A2 = new ArrayList<>();
+        A2.add(pants);
+        A2.add(hats);
 
-        Shipment s = new Shipment(null);
+        Order o = new Order(null, A);
+        Order o2 = new Order(null, A2);
+
+
+        Shipment s = new Shipment("42069");
         s.addOrder(o);
-        s.addOrder(o);
+        s.addOrder(o2);
         s.finalizeShipment();
 
-        Map<Product, Integer> products = s.getProducts();
-
-        System.out.println(products);
+        System.out.println(s);
         
     }
     
