@@ -17,7 +17,7 @@ public class PrototypeController {
         }
         // 2) create prototype
         Prototype p = new Prototype(concept, materials);
-        p.approve(); // keep Iteration 1 simple
+        p.approve();
 
         // 3) save to file
         try {
