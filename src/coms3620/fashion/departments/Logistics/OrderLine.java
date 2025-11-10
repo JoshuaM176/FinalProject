@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.Logistics;
+package coms3620.fashion.departments.logistics;
 
 public class OrderLine {
     private String name;
@@ -30,6 +30,6 @@ public class OrderLine {
 
     @Override
     public String toString() {
-        return name + " (" + sku + ")";
+        return name + " (" + sku + ")" + " - Quantity: " + quantity;
     }
 }

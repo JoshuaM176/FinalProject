@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.Logistics;
+package coms3620.fashion.departments.logistics;
 
 import java.util.List;
 

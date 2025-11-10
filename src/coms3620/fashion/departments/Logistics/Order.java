@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.Logistics;
+package coms3620.fashion.departments.logistics;
 
 import java.util.List;
 
@@ -25,6 +25,23 @@ public class Order implements Trackable {
 
     public void updateStatus() {
 
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Order id: " + id)
+        .append("\n")
+        .append("Products in this order:")
+        .append("\n");
+
+        for (OrderLine ol : orderLines) {
+            sb.append(ol)
+            .append("\n");
+        }
+
+        return sb.toString();
     }
 
     public List<OrderLine> getOrderLines() {

@@ -17,6 +17,7 @@ public abstract class Menu {
     }
 
     private boolean selectOption() {
+        System.out.println();
         System.out.println("0. Exit Menu");
         for(int i = 0; i < options.size(); i++) {
             System.out.println(Integer.toString(i+1) + ". " + options.get(i).getName());
