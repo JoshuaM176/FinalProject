@@ -4,7 +4,7 @@ import java.util.*;
 
 public class StoreManager {
     private List<Employee> employees = new ArrayList<>();
-    private static final String FILE_NAME = "employee.csv";
+    private static final String FILE_NAME = "src/employee.csv";
 
     // Load employees from CSV
     public void loadEmployees() {
