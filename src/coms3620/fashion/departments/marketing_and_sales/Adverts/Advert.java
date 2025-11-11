@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.marketing_and_sales.Adverts;
+package coms3620.fashion.departments.marketing_and_sales.adverts;
 import coms3620.fashion.util.InputValidation;
 import coms3620.fashion.util.Stdin;
 import java.util.UUID;
@@ -43,6 +43,10 @@ public abstract class Advert {
             System.out.println("Enter the name of the advertisement.");
             this.name = Stdin.nextLine();
         }
+    }
+
+    public void setId(UUID id) {   
+        this.id = id;
     }
 
     public UUID getId() {

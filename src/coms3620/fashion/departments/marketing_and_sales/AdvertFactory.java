@@ -1,6 +1,6 @@
 package coms3620.fashion.departments.marketing_and_sales;
 
-import coms3620.fashion.departments.marketing_and_sales.Adverts.*;
+import coms3620.fashion.departments.marketing_and_sales.adverts.*;
 import coms3620.fashion.util.InputValidation;
 
 import java.util.HashMap;
@@ -19,8 +19,8 @@ public class AdvertFactory {
         classMap.put("TV Commercial", ()->new TVCommercial());
     }
 
-    public <T extends Advert> void addOption(T advert) {
-
+    public void addOption(Advert advert) {
+        //TODO
     }
 
     public Advert createAdvertFromInput() {

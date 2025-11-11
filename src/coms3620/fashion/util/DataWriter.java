@@ -10,5 +10,18 @@ public class DataWriter {
     public DataWriter(String path) throws IOException {
         File = new BufferedWriter(new FileWriter(path));
     }
-    //TODO
+    
+    public void putRow(Object... elements) throws IOException {
+        for(int i = 0; i <elements.length; i++) {
+            File.append(elements[i].toString());
+            if(i!=elements.length-1) {
+                File.append(",");
+            }
+        }
+        File.append("\n");
+    }
+
+    public void close() throws IOException {
+        File.close();
+    }
 }
