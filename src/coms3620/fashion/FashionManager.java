@@ -2,7 +2,7 @@ package coms3620.fashion;
 
 import coms3620.fashion.menus.Menu;
 import coms3620.fashion.menus.marketing_and_sales.MarketingAndSales;
-import coms3620.fashion.menus.logistics.Logistics;;
+import coms3620.fashion.menus.logistics.Logistics;
 
 
 public class FashionManager extends Menu {
