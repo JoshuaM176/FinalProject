@@ -17,6 +17,19 @@ public abstract class Advert {
         id = UUID.randomUUID();
     }
 
+    public Advert(Object[] object) {
+        try {
+            type = (String)object[0];
+            name = (String)object[1];
+            pricePerDay = (int)object[2];
+            running = (boolean)object[3];
+            id = (UUID)object[4];
+        } catch (Exception e) {
+            System.out.println("Failed to create object");
+        }
+
+    }
+
     public Advert(AdvertParameters params) {
         this(params.pricePerDay, params.name);
     }

@@ -6,17 +6,24 @@ import coms3620.fashion.util.InputValidation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.function.Function;
 import java.util.Objects;
 
 
 public class AdvertFactory {
 
-    private Map<String,Supplier<Advert>> classMap = new HashMap<String,Supplier<Advert>>();
+    private Map<String,Supplier<Advert>> advertFromInputMap = new HashMap<String,Supplier<Advert>>();
+    private Map<String,Function<Object[],Advert>> advertFromFileMap = new HashMap<String,Function<Object[],Advert>>();
 
     public AdvertFactory() {
-        classMap.put("Magazine Advert", ()->new MagazineAdvert());
-        classMap.put("Radio Advert", ()->new RadioAdvert());
-        classMap.put("TV Commercial", ()->new TVCommercial());
+        //Define constructors for user input
+        advertFromInputMap.put("Magazine Advert", ()->new MagazineAdvert());
+        advertFromInputMap.put("Radio Advert", ()->new RadioAdvert());
+        advertFromInputMap.put("TV Commercial", ()->new TVCommercial());
+        //Define constructors for reading from file
+        advertFromFileMap.put("Magazine", (Object[] object)->new MagazineAdvert(object));
+        advertFromFileMap.put("Radio", (Object[] object)->new RadioAdvert(object));
+        advertFromFileMap.put("TV", (Object[] object)->new TVCommercial(object));
     }
 
     public void addOption(Advert advert) {
@@ -25,9 +32,15 @@ public class AdvertFactory {
 
     public Advert createAdvertFromInput() {
         System.out.println("What type of advertisement are you creating?");
-        Supplier<Advert> advertConstructor = selectOption(classMap);
+        Supplier<Advert> advertConstructor = selectOption(advertFromInputMap);
         if(Objects.isNull(advertConstructor)) {return null;}
         return advertConstructor.get();
+    }
+
+    public Advert createAdvertFromObject(Object[] object) {
+        Function<Object[],Advert> function = advertFromFileMap.get("Magazine");
+        Advert advert = function.apply(object);
+        return advert;
     }
 
     private <T> T selectOption(Map<String,T> options) {

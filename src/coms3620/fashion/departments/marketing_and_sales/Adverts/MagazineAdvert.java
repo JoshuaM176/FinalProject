@@ -5,4 +5,12 @@ public class MagazineAdvert extends Advert {
         super();
         type = "Magazine";
     }
+
+    public MagazineAdvert(Object[] object) {
+        super(object);
+    }
+
+    public MagazineAdvert(AdvertParameters params) {
+        super(params);
+    }
 }

@@ -5,4 +5,12 @@ public class TVCommercial extends Advert{
         super();
         type = "TV";
     }
+
+    public TVCommercial(Object[] object) {
+        super(object);
+    }
+
+    public TVCommercial(AdvertParameters params) {
+        super(params);
+    }
 }

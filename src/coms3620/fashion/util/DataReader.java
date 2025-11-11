@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.UUID;
 
 public class DataReader {
 
@@ -16,6 +17,8 @@ public class DataReader {
      * Reads in one line from the csv, returns an array of objects whose type is determine by the elements string, returns null at eof
      * elementTypes string can contain
      * i - integer
+     * u - UUID
+     * b - boolean
      * s - string
      * For example, iss would expect the csv to contain an integer followed by two strings
      * 
@@ -35,8 +38,12 @@ public class DataReader {
                 case 'i':
                     objects[i] = Integer.parseInt(elements[i]);
                     break;
+                case 'u':
+                    objects[i] = UUID.fromString(elements[i]);
+                    break;
                 case 'b':
                     objects[i] = elements[i] == "true";
+                    break;
                 case 's':
                     objects[i] = elements[i];
                     break;

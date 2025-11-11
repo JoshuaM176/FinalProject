@@ -3,6 +3,7 @@ import coms3620.fashion.departments.marketing_and_sales.adverts.Advert;
 import coms3620.fashion.util.DataWriter;
 import coms3620.fashion.util.DataReader;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,22 +20,25 @@ public class AdvertManager {
             DataReader reader = new DataReader("data/marketing_and_sales/adverts.csv");
             reader.getRow("sssss"); // Skip header
             Object[] object;
-            while((object = reader.getRow("sissbi")) != null) {
-                //TODO
+            while((object = reader.getRow("ssibu")) != null) {
+                Advert advert = advertFactory.createAdvertFromObject(object);
+                adverts.add(advert);
             }
+            reader.close();
         }
+        catch(FileNotFoundException e) {}
         catch (Exception e) {
             System.out.println("Failed to read data");
             System.out.println(e);
         }
-    } //TODO
+    }
 
     public void saveData() {
         try {
             DataWriter writer = new DataWriter("data/marketing_and_sales/adverts.csv");
-            writer.putRow("name", "pricePerDay", "type", "running", "id");
+            writer.putRow("type", "name", "pricePerDay", "running", "id");
             for(Advert advert : adverts) {
-                writer.putRow(advert.name, advert.pricePerDay, advert.type, advert.getRunning(), advert.getId());
+                writer.putRow(advert.type, advert.name, advert.pricePerDay, advert.getRunning(), advert.getId());
             }
             writer.close();
         } catch (IOException e) {
