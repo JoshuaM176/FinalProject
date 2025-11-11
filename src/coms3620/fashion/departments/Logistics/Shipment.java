@@ -2,6 +2,7 @@ package coms3620.fashion.departments.logistics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +11,10 @@ public class Shipment implements Trackable {
     private String id;
     private List<Order> orders = new ArrayList<>();
     private Status status;
-    private Map<OrderLine, Integer> shipment = new HashMap();
+    private Map<String, Integer> shipment = new HashMap();
 
-    public Shipment(String id) {
+    public Shipment(List<Order> orders, String id) {
+        this.orders = orders;
         this.id = id;
         status = Status.PENDING;
     }
@@ -21,16 +23,11 @@ public class Shipment implements Trackable {
         return this.id;
     }
 
-    public void addOrder(Order order) {
-        orders.add(order);
-    }
-
     public void finalizeShipment() {
         shipment.clear();
         for (Order order : orders) {
-            for (OrderLine product : order.getOrderLines()) {
-                int quantity = product.getQuantity();
-                shipment.merge(product, quantity, Integer::sum);
+            for (OrderLine ol : order.getOrderLines()) {
+                shipment.merge(ol.getSKU(), ol.getQuantity(), Integer::sum);
             }
         }
         this.status = Status.SHIPPED;
@@ -43,32 +40,45 @@ public class Shipment implements Trackable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        HashSet<String> seen = new HashSet<>();
+
         sb.append("Shipment ID: ").append(id).append("\n");
-        sb.append("Status: ").append(status).append("\n");
-        sb.append("Orders in shipment: ").append(orders.size()).append("\n\n");
+        sb.append("Status: ").append(status).append("\n\n");
 
-            if (shipment.isEmpty()) {
-                sb.append("  (No products finalized yet)\n");
-            } else {
-                sb.append("Products in shipment:\n");
-                int totalQuantity = 0;
-
-                for (var entry : shipment.entrySet()) {
-                    OrderLine product = entry.getKey();
-                    int quantity = entry.getValue();
-
-                    sb.append("  ").append(product.toString())
-                    .append(" - Quantity: ")
-                    .append(quantity).append("\n");
-
-                    totalQuantity += quantity;
+        if (shipment.isEmpty())
+            sb.append(". (No products finalized yet.)");
+        else {
+            sb.append("Orders in shipment (by order no.):\n");
+            int totalQuantity = 0;
+            sb.append("  ");
+            for (Order order : orders) {
+                if (order.equals(orders.get(orders.size()-1)))
+                    sb.append(order.getID());
+                else
+                    sb.append(order.getID()).append(", ");
+            }
+            sb.append("\n\n")
+            .append("Products in this shipment:\n");
+      
+            for (Order order : orders) {
+                for (OrderLine ol : order.getOrderLines()) {
+                    String sku = ol.getSKU();
+                    if (shipment.containsKey(sku) && !seen.contains(sku)) {
+                        sb.append("  ")
+                        .append(ol)
+                        .append(" - quantity: ")
+                        .append(shipment.get(sku))
+                        .append("\n");
+                        totalQuantity += shipment.get(sku);
+                        seen.add(sku);
+                    }
                 }
-
-                sb.append("\nShipment quantity: ")
+            }
+            sb.append("Shipment quantity: ")
                 .append(totalQuantity)
                 .append("\n");
-            }
-        
+        }
+
         return sb.toString();
     }
 

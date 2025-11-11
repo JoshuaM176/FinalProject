@@ -3,7 +3,6 @@ package coms3620.fashion.departments.logistics;
 public class OrderLine {
     private String name;
     private String sku;
-    private String upc;
     private int quantity;
 
     public OrderLine(String name, String sku, int quantity) {
@@ -18,10 +17,6 @@ public class OrderLine {
     
     public String getSKU() {
         return this.sku;
-    }
-
-    public String getUPC() {
-        return this.upc;
     }
 
     public int getQuantity() {
