@@ -36,7 +36,6 @@ public class HRMain {
         case 4 -> {
             sm.saveEmployees();
             System.out.println("Exiting HR module...");
-            sc.close();
             return;
         }
         default -> System.out.println("Invalid choice. Try again.");
