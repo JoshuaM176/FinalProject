@@ -1,24 +1,27 @@
 package coms3620.fashion.departments.logistics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
 
 import coms3620.fashion.misc.RandStringGenerator;
 import coms3620.fashion.util.Stdin;
 
 public class LogisticsManager {
     List<Order> orders = new ArrayList<>();
-    List<String> availableProducts = new ArrayList<>();
+    // List<String> availableProducts = new ArrayList<>();
+    Map<String, String> availableProducts = new HashMap<>();
 
     public void printAvailableProducts() {
         availableProducts.clear();
-        availableProducts.add("shirt");
-        availableProducts.add("hat");
-        availableProducts.add("pants");
+        availableProducts.put("shirt", "TSH-M-BLK-NK-001");
+        availableProducts.put("hat", "HAT-M-GRY-NK-001" );
+        availableProducts.put("pants", "PNT-BLU-LEV-001");
         System.out.println("Avaliable products:");
-        for (String s : availableProducts) {
-            System.out.println(s);
+        for (String key : availableProducts.keySet()) {
+            System.out.println(key);
         }
         System.out.println();
     }
@@ -31,31 +34,33 @@ public class LogisticsManager {
         int keepAdding = 0;
         
         do {
-            try {
-                System.out.print("Enter name of the product --> ");
-                String name = Stdin.nextLine();
-                System.out.println();
+            System.out.print("Enter name of the product --> ");
+            String name = Stdin.nextLine();
+            System.out.println();
 
-                System.out.print("Enter product SKU --> ");
-                String sku = Stdin.nextLine();
-                System.out.println();
-
-                System.out.print("Enter product quantity --> ");
-                int quantity = Stdin.nextInt();
-                System.out.println();
-
-                if (!isValidInput(name.toLowerCase(), sku.toLowerCase(), quantity))
-                    throw new InputMismatchException();
-
-                orderLines.add(new OrderLine(name, sku, quantity));
-
-                System.out.print("Add another product? (2 = no) --> ");
-                keepAdding = Stdin.nextInt();
-                System.out.println();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input, please try again.");
+            while (!isValidInput(name)) {
+                System.out.print("Invalid product name, please try again --> ");
+                name = Stdin.nextLine();
                 System.out.println();
             }
+
+            System.out.print("Enter product quantity --> ");
+            int quantity = Stdin.nextInt();
+            System.out.println();
+
+            while (!isValidInput(quantity)){
+                System.out.print("Invalid quantity, please try again --> ");
+                quantity = Stdin.nextInt();
+                System.out.println();
+            }
+
+            String sku = availableProducts.get(name);
+            orderLines.add(new OrderLine(name, sku, quantity));
+
+            System.out.print("Add another product? (2 = no) --> ");
+            keepAdding = Stdin.nextInt();
+            System.out.println();
+
         } 
         while(keepAdding != 2);
 
@@ -66,8 +71,15 @@ public class LogisticsManager {
         System.out.println("New order was successfully made, id: " + order.getID());
     }
 
-    public boolean isValidInput(String name, String sku, int quantity) {
-        if (!availableProducts.contains(name) || quantity <= 0) 
+    public boolean isValidInput(String name) {
+        if (!availableProducts.containsKey(name)) 
+            return false;
+        else
+            return true;
+    }
+
+    public boolean isValidInput(int quantity) {
+        if (quantity <= 0) 
             return false;
         else
             return true;
