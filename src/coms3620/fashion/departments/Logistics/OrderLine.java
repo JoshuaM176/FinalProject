@@ -20,10 +20,6 @@ public class OrderLine {
         return this.sku;
     }
 
-    public String getUPC() {
-        return this.upc;
-    }
-
     public int getQuantity() {
         return this.quantity;
     }

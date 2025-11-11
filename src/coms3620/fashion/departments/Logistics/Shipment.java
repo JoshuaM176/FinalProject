@@ -37,38 +37,6 @@ public class Shipment implements Trackable {
         return status.toString();
     }
 
-    // @Override
-    // public String toString() {
-    //     StringBuilder sb = new StringBuilder();
-    //     sb.append("Shipment ID: ").append(id).append("\n");
-    //     sb.append("Status: ").append(status).append("\n");
-    //     sb.append("Orders in shipment: ").append(orders.size()).append("\n\n");
-
-    //         if (shipment.isEmpty()) {
-    //             sb.append("  (No products finalized yet)\n");
-    //         } else {
-    //             sb.append("Products in shipment:\n");
-    //             int totalQuantity = 0;
-
-    //             for (var entry : shipment.entrySet()) {
-    //                 OrderLine product = entry.getKey();
-    //                 int quantity = entry.getValue();
-
-    //                 sb.append("  ").append(product.toString())
-    //                 .append(" - Quantity: ")
-    //                 .append(quantity).append("\n");
-
-    //                 totalQuantity += quantity;
-    //             }
-
-    //             sb.append("Shipment quantity: ")
-    //             .append(totalQuantity)
-    //             .append("\n");
-    //         }
-        
-    //     return sb.toString();
-    // }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -78,7 +46,7 @@ public class Shipment implements Trackable {
         sb.append("Status: ").append(status).append("\n\n");
 
         if (shipment.isEmpty())
-            sb.append(". (No products finilized yet.)");
+            sb.append(". (No products finalized yet.)");
         else {
             sb.append("Orders in shipment (by order no.):\n");
             int totalQuantity = 0;
