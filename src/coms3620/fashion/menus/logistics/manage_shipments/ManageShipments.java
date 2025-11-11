@@ -9,9 +9,11 @@ public class ManageShipments extends Menu implements Option {
     public ManageShipments(LogisticsManager logisticsManager) {
         CreateShipment createShipment = new CreateShipment(logisticsManager);
         ViewShipments viewShipments = new ViewShipments(logisticsManager);
+        CancelShipment cancelShipment = new CancelShipment(logisticsManager);
 
         addOption(createShipment);
         addOption(viewShipments);
+        addOption(cancelShipment);
     }
     
     @Override

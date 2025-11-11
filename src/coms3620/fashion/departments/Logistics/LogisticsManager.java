@@ -148,4 +148,21 @@ public class LogisticsManager {
         }
     }
 
+    public void cancelShipment() {
+        viewShipments();
+        if (shipments.isEmpty()) {
+            return;
+        }
+
+        System.out.print("Enter shipment order to cancel --> ");
+        int index = Stdin.nextInt();
+        if (index > shipments.size())
+            System.out.println("Shipment was not canceled - no such shipment.");
+        else {
+            shipments.get(index - 1).updateStatus();
+        }
+
+
+    }
+
 }

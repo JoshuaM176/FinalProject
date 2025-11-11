@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Shipment implements Trackable {
-    enum Status {PENDING, SHIPPED, EARLY, LATE, ARRIVED}
+    enum Status {PENDING, SHIPPED, EARLY, LATE, ARRIVED, CANCELED}
     private String id;
     private List<Order> orders = new ArrayList<>();
     private Status status;
@@ -83,7 +83,7 @@ public class Shipment implements Trackable {
     }
 
     public void updateStatus() {
-        
+        this.status = Status.CANCELED;
     }
     
 }
