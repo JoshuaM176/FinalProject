@@ -10,10 +10,12 @@ import coms3620.fashion.util.Stdin;
 
 public class LogisticsManager {
     List<Order> orders = new ArrayList<>();
-    // List<String> availableProducts = new ArrayList<>();
+    List<Shipment> shipments = new ArrayList<>();
     Map<String, String> availableProducts = new HashMap<>();
+    private RandStringGenerator rand;
 
     public void printAvailableProducts() {
+        this.rand = new RandStringGenerator();
         availableProducts.clear();
         availableProducts.put("shirt", "TSH-M-BLK-NK-001");
         availableProducts.put("hat", "HAT-M-GRY-NK-001" );
@@ -28,7 +30,6 @@ public class LogisticsManager {
     public void createOrder() {
         System.out.println();
         printAvailableProducts();
-        RandStringGenerator rand = new RandStringGenerator();
         List<OrderLine> orderLines = new ArrayList<>();
         int keepAdding = 0;
         
@@ -111,6 +112,39 @@ public class LogisticsManager {
         else {
             orders.remove(index - 1);
             System.out.println("Order was successfully deleted.");
+        }
+    }
+
+    public void createShipment() {
+        viewOrders();
+        if (orders.isEmpty())
+            return;
+        else {
+            System.out.println("Ship these orders?");
+            System.out.print("(1 = yes, 2 = no) --> ");
+            int shipOrders = Stdin.nextInt();
+
+            if (shipOrders != 1)
+                return;
+            else {
+                Shipment shipment = new Shipment(new ArrayList<>(orders), rand.generateRandomString(8));
+                shipment.finalizeShipment();
+                shipments.add(shipment);
+                orders.clear();
+            }
+        }
+    }
+
+    public void viewShipments() {
+        System.out.println();
+        if (shipments.isEmpty())
+            System.out.println("There are currently no shipments");
+        else {
+            int index = 1;
+            for (Shipment shipment : shipments) {
+                System.out.println("Shipment no. " + index);
+                System.out.println(shipment);
+            }
         }
     }
 
