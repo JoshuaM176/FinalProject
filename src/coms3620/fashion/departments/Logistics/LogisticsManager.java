@@ -29,7 +29,6 @@ public class LogisticsManager {
         RandStringGenerator rand = new RandStringGenerator();
         List<OrderLine> orderLines = new ArrayList<>();
         int keepAdding = 0;
-
         
         do {
             try {
@@ -76,8 +75,31 @@ public class LogisticsManager {
 
     public void viewOrders() {
         System.out.println();
-        for (Order order : orders) {
-            System.out.println(order);
+        if (orders.isEmpty())
+            System.out.println("There are currently no orders.");
+        else {
+            int index = 1;
+            for (Order order : orders) {
+                System.out.println("Order no. " + index);
+                System.out.println(order);
+                index++;
+            }
+        }
+    }
+
+    public void deleteOrder() {
+        System.out.println();
+        if (orders.isEmpty()) {
+            System.out.println("There are currently no orders to delete.");
+            return;
+        }
+        System.out.print("Enter order number --> ");
+        int index = Stdin.nextInt();
+        if (index > orders.size()) 
+            System.out.println("Order was not deleted - no such order.");
+        else {
+            orders.remove(index - 1);
+            System.out.println("Order was successfully deleted.");
         }
     }
 

@@ -53,12 +53,12 @@ public class Order implements Trackable {
                 if (productQuantities.containsKey(sku)) {
                     sb.append("  ")
                     .append(ol)
-                    .append(" - quanitity: ")
+                    .append(" - quantity: ")
                     .append(productQuantities.get(sku))
                     .append("\n");
                     totalQuantity += productQuantities.get(sku);
                     // Prevent duplicate printing for same SKU
-                    productQuantities.remove(sku);
+                    // productQuantities.remove(sku);
                 }
             }
             sb.append("Total quantity: ").append(totalQuantity).append("\n");
