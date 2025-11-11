@@ -30,6 +30,6 @@ public class OrderLine {
 
     @Override
     public String toString() {
-        return name + " (" + sku + ")" + " - Quantity: " + quantity;
+        return name + " (" + sku + ")";
     }
 }
