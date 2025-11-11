@@ -5,4 +5,12 @@ public class RadioAdvert extends Advert{
         super();
         type = "Radio";
     }
+
+    public RadioAdvert(Object[] object) {
+        super(object);
+    }
+
+    public RadioAdvert(AdvertParameters params) {
+        super(params);
+    }
 }
