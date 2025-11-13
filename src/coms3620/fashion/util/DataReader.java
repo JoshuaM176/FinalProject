@@ -16,6 +16,13 @@ public class DataReader {
         File = new BufferedReader(new FileReader(filepath));
     }
 
+    /**
+     * Reads in one line from the csv, uses the first entry from that line to define the object types of all other elements
+     * The line is then parsed using DataReader.getRow()
+     * 
+     * @author Joshua Morningstar
+     * @throws Exception
+     */
     public Object[] getEncodedRow() throws Exception {
         String line = File.readLine();
         if(line == null) { return null; }

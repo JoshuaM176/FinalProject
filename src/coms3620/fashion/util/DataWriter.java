@@ -11,6 +11,12 @@ public class DataWriter {
         File = new BufferedWriter(new FileWriter(path));
     }
     
+    /**
+     * Writes a row of objects by calling their toString method
+     * 
+     * @author Joshua Morningstar
+     * @throws IOException
+     */
     public void putRow(Object... elements) throws IOException {
         for(int i = 0; i <elements.length; i++) {
             File.append(elements[i].toString());
