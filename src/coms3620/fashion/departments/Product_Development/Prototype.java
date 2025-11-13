@@ -1,6 +1,5 @@
 package coms3620.fashion.departments.product_development;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Prototype {
@@ -16,7 +15,6 @@ public class Prototype {
         this.approved = false;
     }
 
-    /*  for re-hydrating from CSV  */
     public Prototype(UUID id, String conceptName, String materials, boolean approved) {
         this.id = id;
         this.conceptName = conceptName;
@@ -24,21 +22,23 @@ public class Prototype {
         this.approved = approved;
     }
 
-    public void approve() { this.approved = true; }
+    public void approve() {
+        this.approved = true;
+    }
 
-    /*  CSV row:  u,s,s,b   (UUID, concept, materials, approved)  */
     public Object[] toRow() {
         return new Object[]{id, conceptName, materials, approved};
     }
 
-    public String toRecord() {
+    @Override
+    public String toString() {
         return String.format(
-            "id=%s | concept=%s | materials=%s | approved=%s | ts=%s",
-            id, conceptName, materials, approved, LocalDateTime.now()
+            "Prototype{id=%s, concept='%s', materials='%s', approved=%s}",
+            id, conceptName, materials, approved
         );
     }
 
-    /*  getters  */
+    // Getters
     public UUID getId() { return id; }
     public String getConceptName() { return conceptName; }
     public String getMaterials() { return materials; }

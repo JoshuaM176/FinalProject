@@ -20,7 +20,7 @@ public class ViewPrototypes implements Option {
 
     @Override
     public void run() {
-        List<?> protos = repo.findAll();   // or List<Prototype> if you expose the type
+        List<?> protos = repo.findAll();   // or List<Prototype>
         if (protos.isEmpty()) {
             System.out.println("No prototypes found.");
         } else {

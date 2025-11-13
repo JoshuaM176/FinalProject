@@ -1,5 +1,7 @@
 package coms3620.fashion;
 
+import java.io.File;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -26,7 +28,7 @@ private static void splashScreen() {
 ║                                 ║        WELCOME TO GROUP 0  TERMINAL        ║                                 ║
 ║                                 ╚════════════════════════════════════════════╝                                 ║
 ║                                                                                                                ║
-║                                   >>> Press [ENTER] to initialize system... <<<                                ║
+║                                 >>> Press [ENTER] to initialize system... <<<                                  ║
 ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 """
     );

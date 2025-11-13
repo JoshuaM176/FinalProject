@@ -3,6 +3,7 @@ package coms3620.fashion.departments.product_development;
 import coms3620.fashion.util.DataReader;
 import coms3620.fashion.util.DataWriter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -13,7 +14,12 @@ public class PrototypeRepository {
 
     public PrototypeRepository(String filePath) {
         this.filePath = filePath;
-        load();
+        File f = new File(filePath);
+        if (f.exists() && f.length() > 0) {
+            load();                       // read only when there is data
+        } else {
+            System.out.println("Repository: no existing CSV (“" + filePath + "”) – starting empty.");
+        }
     }
 
     /*  load from CSV  */
@@ -21,11 +27,11 @@ public class PrototypeRepository {
         try (DataReader dr = new DataReader(filePath)) {
             dr.getRow("sssb");        // skip header
             Object[] row;
-            while ((row = dr.getRow("usbb")) != null) { // UUID, String, String, boolean
-                UUID id         = (UUID) row[0];
-                String concept  = (String) row[1];
-                String materials= (String) row[2];
-                boolean approved= (Boolean) row[3];
+            while ((row = dr.getRow("ussb")) != null) { // UUID, String, String, boolean
+                UUID id = (UUID) row[0];
+                String concept = (String) row[1];
+                String materials = (String) row[2];
+                boolean approved = (Boolean) row[3];
                 cache.add(new Prototype(id, concept, materials, approved));
             }
         } catch (Exception e) {
@@ -37,13 +43,20 @@ public class PrototypeRepository {
     public void save() {
         try (DataWriter dw = new DataWriter(filePath)) {
             dw.putRow("id", "concept", "materials", "approved"); // header
-            for (Prototype p : cache) dw.putRow(p.toRow());
+            for (Prototype p : cache) {
+                dw.putRow(p.toRow());
+            }
         } catch (IOException e) {
             System.out.println("Failed to save prototypes: " + e.getMessage());
         }
     }
 
-    /*  CRUD helpers  */
-    public void add(Prototype p) { cache.add(p); save(); }
-    public List<Prototype> findAll() { return Collections.unmodifiableList(cache); }
+    public void add(Prototype p) {
+        cache.add(p);
+        save();
+    }
+
+    public List<Prototype> findAll() {
+        return Collections.unmodifiableList(cache);
+    }
 }
