@@ -1,4 +1,4 @@
-package coms3620.fashion.menus.product_development;
+package coms3620.fashion.menus.productdevelopment;
 
 import coms3620.fashion.menus.Option;
 import coms3620.fashion.departments.product_development.PrototypeRepository;

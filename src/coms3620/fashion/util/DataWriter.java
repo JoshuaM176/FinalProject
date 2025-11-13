@@ -3,7 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class DataWriter {
+public class DataWriter implements AutoCloseable {
 
     private BufferedWriter File;
 

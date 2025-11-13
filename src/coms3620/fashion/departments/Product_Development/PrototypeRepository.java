@@ -13,7 +13,7 @@ public class PrototypeRepository {
 
     public PrototypeRepository(String filePath) {
         this.filePath = filePath;
-        load();                       // eager load
+        load();
     }
 
     /*  load from CSV  */
