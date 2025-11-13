@@ -8,10 +8,10 @@ public class Main {
         fashion_manager.enter_menu();
     }
 
-private static void splashScreen() {
-    System.out.print("\033[32m"); // bright green
-    System.out.println(
-"""
+    private static void splashScreen() {
+        System.out.print("\033[32m"); // bright green
+        System.out.println(
+                """
 ╔════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
 ║                                                                                                                ║
 ║        ▄████  ██      ▄▄▄▄▄    ▄  █ ▄█ ████▄    ▄       █▀▄▀█ ██      ▄   ██     ▄▀  ▄███▄   █▄▄▄▄             ║
@@ -29,9 +29,9 @@ private static void splashScreen() {
 ║                                 >>> Press [ENTER] to initialize system... <<<                                  ║
 ╚════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 """
-    );
-    System.out.print("\033[0m"); // reset color
-    new java.util.Scanner(System.in).nextLine(); // pause
-}
+        );
+        System.out.print("\033[0m"); // reset color
+        new java.util.Scanner(System.in).nextLine(); // pause
+    }
 
 }
