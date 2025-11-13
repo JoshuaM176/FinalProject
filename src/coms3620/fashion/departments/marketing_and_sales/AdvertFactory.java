@@ -3,6 +3,9 @@ package coms3620.fashion.departments.marketing_and_sales;
 import coms3620.fashion.departments.marketing_and_sales.adverts.*;
 import coms3620.fashion.util.InputValidation;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.security.DrbgParameters.Instantiation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -15,7 +18,7 @@ public class AdvertFactory {
     private Map<String,Supplier<Advert>> advertFromInputMap = new HashMap<String,Supplier<Advert>>();
     private Map<String,Function<Object[],Advert>> advertFromFileMap = new HashMap<String,Function<Object[],Advert>>();
 
-    public AdvertFactory() {
+    public AdvertFactory(){
         //Define constructors for user input
         advertFromInputMap.put("Magazine Advert", ()->new MagazineAdvert());
         advertFromInputMap.put("Radio Advert", ()->new RadioAdvert());
@@ -26,7 +29,7 @@ public class AdvertFactory {
         advertFromFileMap.put("TV", (Object[] object)->new TVCommercial(object));
     }
 
-    public void addOption(Advert advert) {
+    public <T extends Advert> void addOption(Class<T> advert, String displayName, String type){
         //TODO
     }
 
@@ -38,7 +41,7 @@ public class AdvertFactory {
     }
 
     public Advert createAdvertFromObject(Object[] object) {
-        Function<Object[],Advert> function = advertFromFileMap.get("Magazine");
+        Function<Object[],Advert> function = advertFromFileMap.get(object[0]);
         Advert advert = function.apply(object);
         return advert;
     }

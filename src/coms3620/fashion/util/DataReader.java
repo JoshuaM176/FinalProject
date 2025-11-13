@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
 public class DataReader {
 
@@ -11,6 +14,15 @@ public class DataReader {
 
     public DataReader(String filepath) throws FileNotFoundException {
         File = new BufferedReader(new FileReader(filepath));
+    }
+
+    public Object[] getEncodedRow() throws Exception {
+        String line = File.readLine();
+        if(line == null) { return null; }
+        String[] full_elements = parseLine(line);
+        String elementTypes = full_elements[0];
+        String[] elements = Arrays.copyOfRange(full_elements, 1, full_elements.length);
+        return parseElements(elements, elementTypes);
     }
 
     /**
@@ -28,7 +40,11 @@ public class DataReader {
     public Object[] getRow(String elementTypes) throws Exception {
         String line = File.readLine();
         if(line == null) { return null; }
-        String[] elements = line.split(",");
+        String[] elements = parseLine(line);
+        return parseElements(elements, elementTypes);
+    }
+
+    private Object[] parseElements(String[] elements, String elementTypes) throws Exception {
         if(elements.length != elementTypes.length()) {
             throw new LengthMismatchException("Number of elements doesn't match length of elementTypes");
         }
@@ -50,9 +66,39 @@ public class DataReader {
                 default:
                     throw new Exception("Invalid elementType: " + elementTypes.charAt(i));
             }
-            
         }
         return objects;
+    }
+
+    private String[] parseLine(String line) {
+        char[] charArray = line.toCharArray();
+        List<String> strings = new ArrayList<String>();
+        String string = "";
+        boolean in_quotes = false;
+        boolean start_of_entry = true;
+        for(int i = 0; i < charArray.length; i++) {
+            if(start_of_entry) {
+                if(charArray[i] == '"') {
+                    in_quotes = true;
+                    i++;
+                }
+                start_of_entry = false;
+            }
+            if((charArray[i] == ',') && ! in_quotes) {
+                strings.add(string);
+                string = "";
+                start_of_entry = true;
+            }
+            else if(charArray[i] == '"' && in_quotes) {
+                in_quotes = false;
+            }
+            else {
+                string += charArray[i];
+            }
+        }
+        strings.add(string);
+
+        return strings.toArray(new String[0]);
     }
     
     public void close() throws IOException {

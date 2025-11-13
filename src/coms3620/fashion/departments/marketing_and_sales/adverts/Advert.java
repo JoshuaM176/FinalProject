@@ -7,7 +7,6 @@ public abstract class Advert {
 
     public int pricePerDay;
     public String name;
-    public String type = "none";
     private UUID id;
     private boolean running = false;
 
@@ -19,7 +18,6 @@ public abstract class Advert {
 
     public Advert(Object[] object) {
         try {
-            type = (String)object[0];
             name = (String)object[1];
             pricePerDay = (int)object[2];
             running = (boolean)object[3];
@@ -39,6 +37,10 @@ public abstract class Advert {
         this.pricePerDay = params.pricePerDay;
         this.name = params.name;
         id = UUID.randomUUID();
+    }
+
+    public Object[] getRowData() {
+        return new Object[]{"ssibu", getType(), name, pricePerDay, running, id};
     }
 
     public class AdvertParameters {
@@ -68,6 +70,10 @@ public abstract class Advert {
 
     public boolean getRunning() {
         return running;
+    }
+
+    public static String getType() {
+        return "None";
     }
 
 }

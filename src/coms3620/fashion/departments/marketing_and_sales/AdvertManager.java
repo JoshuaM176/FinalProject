@@ -18,9 +18,9 @@ public class AdvertManager {
     public void loadData() {
         try {
             DataReader reader = new DataReader("data/marketing_and_sales/adverts.csv");
-            reader.getRow("sssss"); // Skip header
+            reader.getEncodedRow(); // Skip header
             Object[] object;
-            while((object = reader.getRow("ssibu")) != null) {
+            while((object = reader.getEncodedRow()) != null) {
                 Advert advert = advertFactory.createAdvertFromObject(object);
                 adverts.add(advert);
             }
@@ -36,9 +36,9 @@ public class AdvertManager {
     public void saveData() {
         try {
             DataWriter writer = new DataWriter("data/marketing_and_sales/adverts.csv");
-            writer.putRow("type", "name", "pricePerDay", "running", "id");
+            writer.putRow("sssss", "type", "name", "pricePerDay", "running", "id");
             for(Advert advert : adverts) {
-                writer.putRow(advert.type, advert.name, advert.pricePerDay, advert.getRunning(), advert.getId());
+                writer.putRow(advert.getRowData());
             }
             writer.close();
         } catch (IOException e) {
@@ -65,7 +65,7 @@ public class AdvertManager {
     public String toString() {
         String string = "pricePerDay, name, type, running, id\n";
         for(Advert advert : adverts) {
-            string += advert.pricePerDay + ", "+ advert.name + ", " + advert.type + ", " + advert.getRunning() + ", " + advert.getId() + "\n";
+            string += advert.pricePerDay + ", "+ advert.name + ", " + advert.getType() + ", " + advert.getRunning() + ", " + advert.getId() + "\n";
         }
         return string;
     }
