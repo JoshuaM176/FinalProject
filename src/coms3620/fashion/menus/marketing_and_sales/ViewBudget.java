@@ -2,7 +2,8 @@ package coms3620.fashion.menus.marketing_and_sales;
 
 import coms3620.fashion.menus.Option;
 
-public class ViewBudget implements Option{
+public class ViewBudget implements Option {
+
     @Override
     public String getName() {
         return "View Budget";
