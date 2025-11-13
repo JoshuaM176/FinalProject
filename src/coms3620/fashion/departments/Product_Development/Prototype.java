@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.Product_Development;
+package coms3620.fashion.departments.product_development;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

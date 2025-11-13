@@ -1,7 +1,7 @@
 package coms3620.fashion.menus.productdevelopment;
 
+import coms3620.fashion.departments.product_development.PrototypeController;
 import coms3620.fashion.menus.Option;
-import coms3620.fashion.departments.Product_Development.PrototypeController;
 import coms3620.fashion.util.Stdin;
 
 public class CreatePrototype implements Option {
