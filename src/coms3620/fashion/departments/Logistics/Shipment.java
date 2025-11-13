@@ -37,6 +37,39 @@ public class Shipment implements Trackable {
         return status.toString();
     }
 
+    public String generateInvoice() {
+        HashSet<String> seen = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("=========== Fashion Logistics Invoice =============\n")
+            .append("Shipment ID: ").append(id).append("\n")
+            .append("Orders: ");
+        for (Order order : orders)
+            sb.append(order.getID());
+        sb.append("\n---------------------------------------------------\n")
+            .append(String.format("%-25s %-20s %-8s\n", "Product", "SKU", "Qty"));
+        for (Order order : orders) {
+            for (OrderLine ol : order.getOrderLines()) {
+                String sku = ol.getSKU();
+                if (shipment.containsKey(sku) && !seen.contains(sku)) {
+                        sb.append(String.format("%-25s %-20s %-8d\n",
+                        ol.getName(),
+                        ol.getSKU(),
+                        shipment.get(sku)));
+                        seen.add(sku);
+                    }
+            }
+        }
+        sb.append("---------------------------------------------------\n")
+            .append("Total items: ")
+            .append(shipment.values().stream().mapToInt(Integer::intValue).sum())
+            .append("\n")
+            .append("Status: ").append(status).append("\n")
+            .append("===================================================\n");
+
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

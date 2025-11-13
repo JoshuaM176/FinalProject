@@ -9,13 +9,19 @@ import coms3620.fashion.misc.RandStringGenerator;
 import coms3620.fashion.util.Stdin;
 
 public class LogisticsManager {
-    List<Order> orders = new ArrayList<>();
-    List<Shipment> shipments = new ArrayList<>();
-    Map<String, String> availableProducts = new HashMap<>();
+    List<Order> orders;
+    List<Shipment> shipments;
+    Map<String, String> availableProducts;
     private RandStringGenerator rand;
 
+    public LogisticsManager() {
+        orders = new ArrayList<>();
+        shipments = new ArrayList<>();
+        availableProducts = new HashMap<>();
+        rand = new RandStringGenerator();
+    }
+
     public void printAvailableProducts() {
-        this.rand = new RandStringGenerator();
         availableProducts.clear();
         availableProducts.put("shirt", "TSH-M-BLK-NK-001");
         availableProducts.put("hat", "HAT-M-GRY-NK-001" );
@@ -25,6 +31,16 @@ public class LogisticsManager {
             System.out.println(key);
         }
         System.out.println();
+    }
+
+    /**
+     * FOR TESTING
+     * @param orderLines
+     */
+    public void createOrder(List<OrderLine> ols, String id) {
+        Order order = new Order(id, ols);
+        order.finalizeOrder();
+        this.orders.add(order);
     }
 
     public void createOrder() {
@@ -93,7 +109,7 @@ public class LogisticsManager {
             int index = 1;
             for (Order order : orders) {
                 System.out.println("Order no. " + index);
-                System.out.println(order);
+                System.out.println(order.generateSummary());
                 index++;
             }
         }
@@ -120,9 +136,10 @@ public class LogisticsManager {
         if (orders.isEmpty())
             return;
         else {
-            System.out.println("Ship these orders?");
-            System.out.print("(1 = yes, 2 = no) --> ");
-            int shipOrders = Stdin.nextInt();
+            // System.out.println("Ship these orders?");
+            // System.out.print("(1 = yes, 2 = no) --> ");
+            // int shipOrders = Stdin.nextInt();
+            int shipOrders = 1;
 
             if (shipOrders != 1)
                 return;
@@ -143,7 +160,7 @@ public class LogisticsManager {
             int index = 1;
             for (Shipment shipment : shipments) {
                 System.out.println("Shipment no. " + index);
-                System.out.println(shipment);
+                System.out.println(shipment.generateInvoice());
             }
         }
     }
