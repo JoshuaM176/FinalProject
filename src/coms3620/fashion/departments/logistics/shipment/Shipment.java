@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.logistics;
+package coms3620.fashion.departments.logistics.shipment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,12 +6,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import coms3620.fashion.departments.logistics.Status;
+import coms3620.fashion.departments.logistics.Trackable;
+import coms3620.fashion.departments.logistics.order.Order;
+import coms3620.fashion.departments.logistics.order.OrderLine;
+
 public class Shipment implements Trackable {
-    enum Status {PENDING, SHIPPED, EARLY, LATE, ARRIVED, CANCELED}
     private String id;
     private List<Order> orders = new ArrayList<>();
     private Status status;
-    private Map<String, Integer> shipment = new HashMap();
+    private static Map<String, Integer> shipment = new HashMap();
 
     public Shipment(List<Order> orders, String id) {
         this.orders = orders;
@@ -23,14 +27,13 @@ public class Shipment implements Trackable {
         return this.id;
     }
 
-    public void finalizeShipment() {
+    private void compileQuantities() {
         shipment.clear();
         for (Order order : orders) {
             for (OrderLine ol : order.getOrderLines()) {
                 shipment.merge(ol.getSKU(), ol.getQuantity(), Integer::sum);
             }
         }
-        this.status = Status.SHIPPED;
     }
 
     public String getStatus() {
@@ -38,6 +41,7 @@ public class Shipment implements Trackable {
     }
 
     public String generateInvoice() {
+        compileQuantities();
         HashSet<String> seen = new HashSet<>();
         StringBuilder sb = new StringBuilder();
 
@@ -45,7 +49,8 @@ public class Shipment implements Trackable {
             .append("Shipment ID: ").append(id).append("\n")
             .append("Orders: ");
         for (Order order : orders)
-            sb.append(order.getID());
+            sb.append(order.getID())
+                .append(" ");
         sb.append("\n---------------------------------------------------\n")
             .append(String.format("%-25s %-20s %-8s\n", "Product", "SKU", "Qty"));
         for (Order order : orders) {
@@ -115,8 +120,9 @@ public class Shipment implements Trackable {
         return sb.toString();
     }
 
-    public void updateStatus() {
-        this.status = Status.CANCELED;
+    @Override
+    public void updateStatus(Status status) {
+        this.status = status;
     }
-    
+
 }

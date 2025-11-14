@@ -1,13 +1,15 @@
-package coms3620.fashion.departments.logistics;
+package coms3620.fashion.departments.logistics.order;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import coms3620.fashion.departments.logistics.Status;
+import coms3620.fashion.departments.logistics.Trackable;
+
 
 public class Order implements Trackable {
-    enum Status {PENDING, EXPEDITED}
     private final String id;
     private final List<OrderLine> orderLines;
     private Status status;
@@ -28,7 +30,7 @@ public class Order implements Trackable {
         return status.toString();
     }
 
-    public void updateStatus() {
+    public void updateStatus(Status status) {
 
     }
 

@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.logistics;
+package coms3620.fashion.departments.logistics.order;
 
 public class OrderLine {
     private String name;

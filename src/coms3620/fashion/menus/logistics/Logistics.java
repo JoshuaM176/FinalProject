@@ -4,14 +4,15 @@ import coms3620.fashion.departments.logistics.LogisticsManager;
 import coms3620.fashion.menus.*;
 import coms3620.fashion.menus.logistics.manage_orders.ManageOrders;
 import coms3620.fashion.menus.logistics.manage_shipments.ManageShipments;
+import coms3620.fashion.menus.logistics.manage_shipments.edit_shipment.EditShipment;
 
 public class Logistics extends Menu implements Option {
 
     public Logistics() {
-        LogisticsManager lm = new LogisticsManager();
+        LogisticsManager logisticsManager = new LogisticsManager();
 
-        ManageOrders manageOrders = new ManageOrders(lm);
-        ManageShipments manageShipments = new ManageShipments(lm);
+        ManageOrders manageOrders = new ManageOrders(logisticsManager);
+        ManageShipments manageShipments = new ManageShipments(logisticsManager);
         
         addOption(manageOrders);
         addOption(manageShipments);
