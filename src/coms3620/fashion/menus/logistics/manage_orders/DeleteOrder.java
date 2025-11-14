@@ -1,6 +1,9 @@
 package coms3620.fashion.menus.logistics.manage_orders;
 
+import java.util.List;
+
 import coms3620.fashion.departments.logistics.LogisticsManager;
+import coms3620.fashion.departments.logistics.order.Order;
 import coms3620.fashion.menus.Option;
 import coms3620.fashion.util.Stdin;
 
@@ -19,19 +22,19 @@ public class DeleteOrder implements Option {
     @Override
     public void run() {
         System.out.println();
-        if (logisticsManager.getOrders().isEmpty()) {
+        List<Order> orders = logisticsManager.getOrders();
+        if (orders.isEmpty()) {
             System.out.println("There are currently no orders to delete.");
             return;
         }
         System.out.print("Enter order number --> ");
         int index = Stdin.nextInt();
-        if (index > logisticsManager.getOrders().size())
+        if (index > orders.size())
             System.out.println("Order was not deleted - no such order.");
         else {
-            logisticsManager.getOrders().remove(index - 1);
+            orders.remove(index - 1);
             System.out.println("Order no. " + index + " was successfully deleted.");
         }
 
     }
-    
 }

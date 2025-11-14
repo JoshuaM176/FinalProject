@@ -1,5 +1,7 @@
 package coms3620.fashion.menus.logistics.manage_orders;
 
+import java.util.List;
+
 import coms3620.fashion.departments.logistics.LogisticsManager;
 import coms3620.fashion.departments.logistics.order.Order;
 import coms3620.fashion.menus.Option;
@@ -18,16 +20,16 @@ public class ViewOrders implements Option {
 
     public void run() {
         System.out.println();
-        if (logisticsManager.getOrders().isEmpty())
+        List<Order> orders = logisticsManager.getOrders();
+        if (orders.isEmpty())
             System.out.println("There are currently no orders.");
         else {
             int index = 1;
-            for (Order order : logisticsManager.getOrders()) {
+            for (Order order : orders) {
                 System.out.println("Order no. " + index);
                 System.out.println(order.generateSummary());
                 index++;
             }
         }
     }
-    
 }

@@ -7,7 +7,6 @@ import coms3620.fashion.menus.Option;
 public class ManageOrders extends Menu implements Option {
 
     public ManageOrders(LogisticsManager lm) {
-
         CreateOrder createOrder = new CreateOrder(lm);
         ViewOrders viewOrders = new ViewOrders(lm);
         DeleteOrder deleteOrder = new DeleteOrder(lm);
@@ -26,5 +25,4 @@ public class ManageOrders extends Menu implements Option {
     public void run() {
         enter_menu();
     }
-    
 }

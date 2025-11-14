@@ -62,5 +62,4 @@ public class CreateOrder implements Option {
         System.out.println("New order was successfully made, id: " + order.getID());
         System.out.println();
     }
-    
 }

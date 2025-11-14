@@ -26,5 +26,4 @@ public class ManageShipments extends Menu implements Option {
     public void run() {
         enter_menu();
     }
-
 }
