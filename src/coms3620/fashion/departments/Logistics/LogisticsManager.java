@@ -2,6 +2,7 @@ package coms3620.fashion.departments.logistics;
 
 import java.util.List;
 
+import coms3620.fashion.departments.logistics.order.Order;
 import coms3620.fashion.departments.logistics.order.OrderLine;
 import coms3620.fashion.departments.logistics.order.OrderManager;
 import coms3620.fashion.departments.logistics.shipment.ShipmentManager;
@@ -11,17 +12,12 @@ public class LogisticsManager {
     private final ShipmentManager shipmentManager;
 
     public LogisticsManager() {
-
-        shipmentManager = new ShipmentManager();
         orderManager = new OrderManager();
+        shipmentManager = new ShipmentManager();
     }
 
-    public void createOrder() {
-        orderManager.createOrder();
-    }
-
-    public void createOrder(List<OrderLine> ols, String id) {
-        orderManager.createOrder(ols, id);
+    public Order createOrder(List<OrderLine> ols) {
+        return(orderManager.createOrder(ols));
     }
 
     public void viewOrders() {
@@ -32,6 +28,10 @@ public class LogisticsManager {
         orderManager.deleteOrder();
     }
 
+    public void printAvailableProducts() {
+        orderManager.printAvailableProducts();
+    }
+
     public void createShipment() {
         viewOrders();
         shipmentManager.createShipment(orderManager.getOrders());
@@ -39,5 +39,9 @@ public class LogisticsManager {
 
     public void viewShipments() {
         shipmentManager.viewShipments();
+    }
+
+    public OrderManager getOrderManager() {
+        return this.orderManager;
     }
 }

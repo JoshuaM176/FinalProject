@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import coms3620.fashion.departments.logistics.Status;
 import coms3620.fashion.departments.logistics.Trackable;
 import coms3620.fashion.departments.logistics.order.Order;
 import coms3620.fashion.departments.logistics.order.OrderLine;

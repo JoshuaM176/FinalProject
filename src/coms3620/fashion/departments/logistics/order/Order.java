@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import coms3620.fashion.departments.logistics.Status;
 import coms3620.fashion.departments.logistics.Trackable;
 
 
@@ -31,7 +30,7 @@ public class Order implements Trackable {
     }
 
     public void updateStatus(Status status) {
-
+        // TODO
     }
 
     public void finalizeOrder() {
@@ -114,4 +113,5 @@ public class Order implements Trackable {
     public List<OrderLine> getOrderLines() {
         return this.orderLines;
     }
+
 }

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import coms3620.fashion.misc.RandStringGenerator;
+import coms3620.fashion.util.RandStringGenerator;
 import coms3620.fashion.util.Stdin;
 
 public class OrderManager {
@@ -23,58 +23,12 @@ public class OrderManager {
         return this.orders;
     }
 
-    /**
-     * FOR TESTING
-     * @param orderLines
-     */
-    public void createOrder(List<OrderLine> ols, String id) {
-        Order order = new Order(id, ols);
-        order.finalizeOrder();
-        this.orders.add(order);
-    }
-
-    public void createOrder() {
-        System.out.println();
-        printAvailableProducts();
-        List<OrderLine> orderLines = new ArrayList<>();
-        int keepAdding = 0;
-        
-        do {
-            System.out.print("Enter name of the product --> ");
-            String name = Stdin.nextLine();
-            System.out.println();
-
-            while (!isValidInput(name)) {
-                System.out.print("Invalid product name, please try again --> ");
-                name = Stdin.nextLine();
-                System.out.println();
-            }
-
-            System.out.print("Enter product quantity --> ");
-            int quantity = Stdin.nextInt();
-            System.out.println();
-
-            while (!isValidInput(quantity)){
-                System.out.print("Invalid quantity, please try again --> ");
-                quantity = Stdin.nextInt();
-                System.out.println();
-            }
-
-            String sku = availableProducts.get(name);
-            orderLines.add(new OrderLine(name, sku, quantity));
-
-            System.out.print("Add another product? (2 = no) --> ");
-            keepAdding = Stdin.nextInt();
-            System.out.println();
-
-        } 
-        while(keepAdding != 2);
-
-        Order order = new Order(randString.generateRandomString(8), orderLines);
+    public Order createOrder(List<OrderLine> ols) {
+        Order order = new Order(randString.generateRandomString(8), ols);
         order.finalizeOrder();
         orders.add(order);
 
-        System.out.println("New order was successfully made, id: " + order.getID());
+        return order;
     }
 
     public void viewOrders() {
@@ -105,6 +59,10 @@ public class OrderManager {
             orders.remove(index - 1);
             System.out.println("Order was successfully deleted.");
         }
+    }
+
+    public String getSKU(String name) {
+        return availableProducts.get(name);
     }
 
     /**

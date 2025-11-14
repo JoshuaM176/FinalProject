@@ -1,4 +1,4 @@
-package coms3620.fashion.misc;
+package coms3620.fashion.util;
 import java.util.Random;
 
 public class RandStringGenerator {

@@ -4,7 +4,6 @@ import coms3620.fashion.departments.logistics.LogisticsManager;
 import coms3620.fashion.menus.*;
 import coms3620.fashion.menus.logistics.manage_orders.ManageOrders;
 import coms3620.fashion.menus.logistics.manage_shipments.ManageShipments;
-import coms3620.fashion.menus.logistics.manage_shipments.edit_shipment.EditShipment;
 
 public class Logistics extends Menu implements Option {
 

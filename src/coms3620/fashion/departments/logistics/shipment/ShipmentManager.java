@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import coms3620.fashion.departments.logistics.order.Order;
-import coms3620.fashion.misc.RandStringGenerator;
+import coms3620.fashion.util.RandStringGenerator;
 import coms3620.fashion.util.Stdin;
 
 public class ShipmentManager {
