@@ -5,10 +5,10 @@ import coms3620.fashion.menus.Menu;
 import coms3620.fashion.menus.Option;
 
 public class EditShipment extends Menu implements Option  {
-    private LogisticsManager logisticsManager;
+    // private LogisticsManager logisticsManager;
 
     public EditShipment(LogisticsManager logisticsManager) {
-        this.logisticsManager = logisticsManager;
+        // this.logisticsManager = logisticsManager;
 
         AddProducts addProducts = new AddProducts();
         RemoveProducts removeProducts = new RemoveProducts();
