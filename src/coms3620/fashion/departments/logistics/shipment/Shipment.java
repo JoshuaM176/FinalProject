@@ -14,7 +14,7 @@ public class Shipment implements Trackable {
     private String id;
     private List<Order> orders = new ArrayList<>();
     private Status status;
-    private static Map<String, Integer> shipment = new HashMap();
+    private static Map<String, Integer> productQuantities = new HashMap();
 
     public Shipment(List<Order> orders, String id) {
         this.orders = orders;
@@ -22,17 +22,23 @@ public class Shipment implements Trackable {
         status = Status.PENDING;
     }
 
+    private void compileQuantities() {
+        productQuantities.clear();
+        for (Order order : orders) {
+            for (OrderLine ol : order.getOrderLines()) {
+                productQuantities.merge(ol.getProductSku(), ol.getQuantity(), Integer::sum);
+            }
+        }
+    }
+
     public String getID() {
         return this.id;
     }
 
-    private void compileQuantities() {
-        shipment.clear();
-        for (Order order : orders) {
-            for (OrderLine ol : order.getOrderLines()) {
-                shipment.merge(ol.getSKU(), ol.getQuantity(), Integer::sum);
-            }
-        }
+    public void ship() {
+        this.status = Status.SHIPPED;
+        for (Order order : orders) 
+            order.ship();
     }
 
     public String getStatus() {
@@ -54,19 +60,19 @@ public class Shipment implements Trackable {
             .append(String.format("%-25s %-20s %-8s\n", "Product", "SKU", "Qty"));
         for (Order order : orders) {
             for (OrderLine ol : order.getOrderLines()) {
-                String sku = ol.getSKU();
-                if (shipment.containsKey(sku) && !seen.contains(sku)) {
+                String sku = ol.getProductSku();
+                if (productQuantities.containsKey(sku) && !seen.contains(sku)) {
                         sb.append(String.format("%-25s %-20s %-8d\n",
-                        ol.getName(),
-                        ol.getSKU(),
-                        shipment.get(sku)));
+                        ol.getProductName(),
+                        ol.getProductSku(),
+                        productQuantities.get(sku)));
                         seen.add(sku);
                     }
             }
         }
         sb.append("---------------------------------------------------\n")
             .append("Total items: ")
-            .append(shipment.values().stream().mapToInt(Integer::intValue).sum())
+            .append(productQuantities.values().stream().mapToInt(Integer::intValue).sum())
             .append("\n")
             .append("Status: ").append(status).append("\n")
             .append("===================================================\n");
@@ -82,7 +88,7 @@ public class Shipment implements Trackable {
         sb.append("Shipment ID: ").append(id).append("\n");
         sb.append("Status: ").append(status).append("\n\n");
 
-        if (shipment.isEmpty())
+        if (productQuantities.isEmpty())
             sb.append(". (No products finalized yet.)");
         else {
             sb.append("Orders in shipment (by order no.):\n");
@@ -99,14 +105,14 @@ public class Shipment implements Trackable {
       
             for (Order order : orders) {
                 for (OrderLine ol : order.getOrderLines()) {
-                    String sku = ol.getSKU();
-                    if (shipment.containsKey(sku) && !seen.contains(sku)) {
+                    String sku = ol.getProductSku();
+                    if (productQuantities.containsKey(sku) && !seen.contains(sku)) {
                         sb.append("  ")
                         .append(ol)
                         .append(" - quantity: ")
-                        .append(shipment.get(sku))
+                        .append(productQuantities.get(sku))
                         .append("\n");
-                        totalQuantity += shipment.get(sku);
+                        totalQuantity += productQuantities.get(sku);
                         seen.add(sku);
                     }
                 }

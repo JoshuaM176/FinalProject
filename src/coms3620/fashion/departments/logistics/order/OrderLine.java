@@ -1,30 +1,25 @@
 package coms3620.fashion.departments.logistics.order;
 
+import coms3620.fashion.departments.logistics.Product;
+
 public class OrderLine {
-    private String name;
-    private String sku;
+    private final Product product;
     private int quantity;
 
-    public OrderLine(String name, String sku, int quantity) {
-        this.name = name;
-        this.sku = sku;
+    public OrderLine(Product product, int quantity) {
+        this.product = product;
         this.quantity = quantity;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return product.getName();
     }
-    
-    public String getSKU() {
-        return this.sku;
+
+    public String getProductSku() {
+        return product.getSKU();
     }
 
     public int getQuantity() {
         return this.quantity;
-    }
-
-    @Override
-    public String toString() {
-        return name + " (" + sku + ")";
     }
 }

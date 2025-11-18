@@ -29,14 +29,18 @@ public class Order implements Trackable {
         return status.toString();
     }
 
+    public void ship() {
+        this.status = Status.SHIPPED;
+    }
+
     public void updateStatus(Status status) {
-        // TODO
+        this.status = status;
     }
 
     public void finalizeOrder() {
         productQuantities.clear();
         for (OrderLine ol : orderLines) {
-            productQuantities.merge(ol.getSKU(), ol.getQuantity(), Integer::sum);
+            productQuantities.merge(ol.getProductSku(), ol.getQuantity(), Integer::sum);
         }
     }
 
@@ -61,12 +65,12 @@ public class Order implements Trackable {
         int totalQuantity = 0;
 
         for (OrderLine ol : orderLines) {
-            String sku = ol.getSKU();
+            String sku = ol.getProductSku();
 
             if (productQuantities.containsKey(sku) && !seen.contains(sku)) {
                 sb.append(String.format("%-25s %-20s %-8d\n",
-                    ol.getName(),
-                    ol.getSKU(),
+                    ol.getProductName(),
+                    ol.getProductSku(),
                     productQuantities.get(sku)));
 
                 totalQuantity += productQuantities.get(sku);
@@ -93,7 +97,7 @@ public class Order implements Trackable {
         } else {
             int totalQuantity = 0;
             for (OrderLine ol : orderLines) {
-                String sku = ol.getSKU();
+                String sku = ol.getProductSku();
                 if (productQuantities.containsKey(sku) && !seen.contains(sku)) {
                     sb.append("  ")
                     .append(ol)

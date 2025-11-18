@@ -1,6 +1,7 @@
 package coms3620.fashion.departments.logistics;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +14,14 @@ import coms3620.fashion.util.RandStringGenerator;
 public class LogisticsManager {
     private List<Order> orders;
     private List<Shipment> shipments;
+    private final ProductRepository productRepository;
     private final RandStringGenerator randString;
     private Map<String, String> availableProducts;
 
     public LogisticsManager() {
         orders = new ArrayList<>();
         shipments = new ArrayList<>();
+        productRepository = new ProductRepository("data/logistics/products.csv");
         randString = new RandStringGenerator();
         availableProducts = new HashMap<>();
     }
@@ -38,12 +41,28 @@ public class LogisticsManager {
         orders.clear();
     }
 
+    public boolean containsProduct(String name) {
+        return productRepository.containsProduct(name);
+    }
+
+    public boolean reduceProductQuantity(String name, int amount) {
+        return productRepository.reduceProductQuantity(name, amount);
+    }
+
+    public Product getProductByName(String name) {
+        return productRepository.getProductByName(name);
+    }
+
     public List<Order> getOrders() {
         return this.orders;
     }
 
     public List<Shipment> getShipments() {
         return this.shipments;
+    }
+
+    public Collection<Product> getAllProducts() {
+        return productRepository.getAll();
     }
 
     /**

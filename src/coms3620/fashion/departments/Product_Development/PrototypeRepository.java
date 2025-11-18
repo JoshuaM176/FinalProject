@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.product_development;
+package coms3620.fashion.departments.Product_Development;
 
 import coms3620.fashion.util.DataReader;
 import coms3620.fashion.util.DataWriter;

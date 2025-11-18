@@ -1,4 +1,4 @@
-package coms3620.fashion.departments.product_development;
+package coms3620.fashion.departments.Product_Development;
 
 public class PrototypeController {
     private final MaterialManager materialManager;
