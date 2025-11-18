@@ -1,7 +1,7 @@
 package coms3620.fashion.menus.productdevelopment;
 
+import coms3620.fashion.departments.product_development.PrototypeRepository;
 import coms3620.fashion.menus.Option;
-import coms3620.fashion.departments.Product_Development.PrototypeRepository;
 
 import java.util.List;
 
