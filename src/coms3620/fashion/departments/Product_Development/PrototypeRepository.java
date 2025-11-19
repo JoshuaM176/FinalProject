@@ -16,7 +16,7 @@ public class PrototypeRepository {
         this.filePath = filePath;
         File f = new File(filePath);
         if (f.exists() && f.length() > 0) {
-            load();                       // read only when there is data
+            load();
         } else {
             System.out.println("Repository: no existing CSV (“" + filePath + "”) – starting empty.");
         }
@@ -28,11 +28,6 @@ public class PrototypeRepository {
             dr.getRow("ssss");        // skip header
             Object[] row;
             while ((row = dr.getRow("ussb")) != null) {
-                // ----  add this block  ----
-                for (int i = 0; i < row.length; i++) {
-                    System.out.printf("col-%d class=%-7s value=%s%n", i, row[i].getClass().getSimpleName(), row[i]);
-                }
-                // --------------------------
                 UUID id = (UUID) row[0];
                 String concept = (String) row[1];
                 String materials = (String) row[2];
@@ -62,10 +57,6 @@ public class PrototypeRepository {
     }
 
     public List<Prototype> findAll() {
-        System.out.println("CACHE before return:");
-        for (Prototype p : cache) {
-            System.out.printf("  %s  approved=%s%n", p.getId(), p.isApproved());
-        }
         return Collections.unmodifiableList(cache);
     }
 }

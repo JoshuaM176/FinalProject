@@ -10,6 +10,12 @@ public class Prototype {
     private boolean approved;
 
     public Prototype(String conceptName, String materials) {
+        if (conceptName == null || conceptName.isBlank()) {
+            throw new IllegalArgumentException("conceptName must not be null or blank");
+        }
+        if (materials == null || materials.isBlank()) {
+            throw new IllegalArgumentException("materials must not be null or blank");
+        }
         this.id = UUID.randomUUID();
         this.conceptName = conceptName;
         this.materials = materials;
@@ -27,6 +33,10 @@ public class Prototype {
         this.approved = true;
     }
 
+    public void unapprove() {
+        this.approved = false;
+    }
+
     public Object[] toRow() {
         return new Object[]{id, conceptName, materials, approved};
     }
@@ -37,10 +47,6 @@ public class Prototype {
                 "Prototype{id=%s, concept='%s', materials='%s', approved=%s}",
                 id, conceptName, materials, approved
         );
-    }
-
-    public void setApproved(boolean approved) {
-        this.approved = approved;
     }
 
     // Getters

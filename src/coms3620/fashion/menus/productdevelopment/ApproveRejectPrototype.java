@@ -21,21 +21,23 @@ public class ApproveRejectPrototype implements Option {
 
     @Override
     public void run() {
-        List<Prototype> pending = repo.findAll()
-                .stream()
-                .filter(p -> !p.isApproved())
-                .toList();
-        if (pending.isEmpty()) {
-            System.out.println("Everything is already approved.");
+        // Use ALL prototypes, not just unapproved
+        List<Prototype> all = repo.findAll();
+        if (all.isEmpty()) {
+            System.out.println("No prototypes available.");
             return;
         }
+
         // show numbered list
-        for (int i = 0; i < pending.size(); i++) {
-            System.out.println("\n" + (i + 1) + ". " + pending.get(i));
+        for (int i = 0; i < all.size(); i++) {
+            Prototype p = all.get(i);
+            String status = p.isApproved() ? "APPROVED" : "PENDING";
+            System.out.println((i + 1) + ". " + p + " [" + status + "]");
         }
+
         System.out.println("Select prototype to approve/reject: ");
-        int idx = InputValidation.IntegerRangeInput(1, pending.size()) - 1;
-        Prototype chosen = pending.get(idx);
+        int idx = InputValidation.IntegerRangeInput(1, all.size()) - 1;
+        Prototype chosen = all.get(idx);
 
         System.out.println("1) Approve   2) Reject   0) Cancel");
         int choice = InputValidation.IntegerRangeInput(0, 2);
@@ -46,10 +48,11 @@ public class ApproveRejectPrototype implements Option {
         if (choice == 1) {
             chosen.approve();
         } else {
-            chosen.setApproved(false);   // reject
+            chosen.unapprove();
         }
         repo.save();
         System.out.println("Prototype " + chosen.getId() + " has been "
                 + (choice == 1 ? "approved" : "rejected") + ".");
     }
+
 }

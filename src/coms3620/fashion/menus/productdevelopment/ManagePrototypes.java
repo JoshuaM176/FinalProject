@@ -8,22 +8,24 @@ public class ManagePrototypes extends Menu implements Option {
 
     public ManagePrototypes() {
         // 1. create the repository and controller once
-        PrototypeRepository repo       = new PrototypeRepository("data/product_development/prototypes.csv");
+        PrototypeRepository repo = new PrototypeRepository("data/product_development/prototypes.csv");
         PrototypeController controller = new PrototypeController(new MaterialManager(), repo);
 
         // 2. pass them to the menu options that need them
         addOption(new CreatePrototype(controller));
         addOption(new ViewPrototypes(repo));
         addOption(new ApproveRejectPrototype(repo));
+        addOption(new FilterByMaterial(repo));
+        addOption(new DeletePrototype(repo));
     }
 
     @Override
-    public String getName() { 
-        return "Manage Prototypes"; 
+    public String getName() {
+        return "Manage Prototypes";
     }
 
     @Override
-    public void run() { 
-        enter_menu(); 
+    public void run() {
+        enter_menu();
     }
 }
