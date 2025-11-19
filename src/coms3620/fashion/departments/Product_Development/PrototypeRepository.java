@@ -25,9 +25,14 @@ public class PrototypeRepository {
     /*  load from CSV  */
     private void load() {
         try (DataReader dr = new DataReader(filePath)) {
-            dr.getRow("sssb");        // skip header
+            dr.getRow("ssss");        // skip header
             Object[] row;
-            while ((row = dr.getRow("ussb")) != null) { // UUID, String, String, boolean
+            while ((row = dr.getRow("ussb")) != null) {
+                // ----  add this block  ----
+                for (int i = 0; i < row.length; i++) {
+                    System.out.printf("col-%d class=%-7s value=%s%n", i, row[i].getClass().getSimpleName(), row[i]);
+                }
+                // --------------------------
                 UUID id = (UUID) row[0];
                 String concept = (String) row[1];
                 String materials = (String) row[2];
@@ -57,6 +62,10 @@ public class PrototypeRepository {
     }
 
     public List<Prototype> findAll() {
+        System.out.println("CACHE before return:");
+        for (Prototype p : cache) {
+            System.out.printf("  %s  approved=%s%n", p.getId(), p.isApproved());
+        }
         return Collections.unmodifiableList(cache);
     }
 }

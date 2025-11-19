@@ -3,6 +3,7 @@ package coms3620.fashion.departments.product_development;
 import java.util.UUID;
 
 public class Prototype {
+
     private final UUID id;
     private final String conceptName;
     private final String materials;
@@ -33,18 +34,29 @@ public class Prototype {
     @Override
     public String toString() {
         return String.format(
-            "Prototype{id=%s, concept='%s', materials='%s', approved=%s}",
-            id, conceptName, materials, approved
+                "Prototype{id=%s, concept='%s', materials='%s', approved=%s}",
+                id, conceptName, materials, approved
         );
     }
-    
+
     public void setApproved(boolean approved) {
-    this.approved = approved;
-}
+        this.approved = approved;
+    }
 
     // Getters
-    public UUID getId() { return id; }
-    public String getConceptName() { return conceptName; }
-    public String getMaterials() { return materials; }
-    public boolean isApproved() { return approved; }
+    public UUID getId() {
+        return id;
+    }
+
+    public String getConceptName() {
+        return conceptName;
+    }
+
+    public String getMaterials() {
+        return materials;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
 }

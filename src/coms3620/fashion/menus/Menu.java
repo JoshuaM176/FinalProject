@@ -6,7 +6,7 @@ import coms3620.fashion.util.Stdin;
 
 public abstract class Menu {
 
-    private final List<Option> options = new ArrayList<Option>();
+    private final List<Option> options = new ArrayList<>();
 
     public void enter_menu() {
         while(true) {
