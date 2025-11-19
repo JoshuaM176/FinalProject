@@ -37,6 +37,10 @@ public class Prototype {
             id, conceptName, materials, approved
         );
     }
+    
+    public void setApproved(boolean approved) {
+    this.approved = approved;
+}
 
     // Getters
     public UUID getId() { return id; }

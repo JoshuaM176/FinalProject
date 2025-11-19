@@ -14,6 +14,7 @@ public class ManagePrototypes extends Menu implements Option {
         // 2. pass them to the menu options that need them
         addOption(new CreatePrototype(controller));
         addOption(new ViewPrototypes(repo));
+        addOption(new ApproveRejectPrototype(repo));
     }
 
     @Override
