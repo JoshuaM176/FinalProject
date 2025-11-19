@@ -17,7 +17,7 @@ public class StoreManager {
                 int id = Integer.parseInt(data[0]);
                 String name = data[1];
                 String status = data[2];
-                employees.add(new Employee(id, name, status));
+                employees.add(new Employee(id, name));
             }
             System.out.println("Employees loaded from " + FILE_NAME);
         } catch (IOException e) {
@@ -45,7 +45,7 @@ public class StoreManager {
         }
         System.out.println("\n--- Employee List ---");
         for (Employee e : employees) {
-            System.out.println(e.getId() + " - " + e.getName() + " - " + e.getStatus());
+            System.out.println(e.getId() + " - " + e.getName());
         }
     }
 
@@ -80,7 +80,7 @@ public void fireEmployee(int id, String reason) {
         }
     }
 
-    Employee newEmp = new Employee(id, name, "Active");
+    Employee newEmp = new Employee(id, name);
     employees.add(newEmp);
     saveEmployees(); // Save to CSV right away
     System.out.println("Added new employee: " + name + " (ID: " + id + ")");
