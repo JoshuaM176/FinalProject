@@ -2,20 +2,37 @@ package coms3620.fashion.departments.logistics;
 
 import java.util.Map;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.security.Policy;
+import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class ProductRepository {
-    private Map<String, Product> products = new HashMap<>();
+    private Map<String, Product> products = new LinkedHashMap<>();
 
     public ProductRepository(String filepath) {
         loadProducts(filepath);
     }
 
     private void loadProducts(String filepath) {
+        File file = new File(filepath);
+
+        if (!file.exists()) {
+            try {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+                try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+                    pw.println("name, sku, size, price, quantity");
+                }
+            } catch (IOException e) {
+                System.out.println("Count not create missing file.");
+            }
+        }
+
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
             String line = br.readLine();
 
@@ -29,19 +46,15 @@ public class ProductRepository {
                 int quantity = Integer.parseInt(parts[4].trim());
 
                 Product p = new Product(name, sku, size, price, quantity);
-                products.put(name, p);
+                products.put(sku, p);
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to load product file: " + filepath, e);
         }
     }
 
-    public Product getProductByName(String name) {
-        return products.get(name);
-    }
-
-    public boolean reduceProductQuantity(String name, int quantity) {
-        return products.get(name).reduceQuantity(quantity);
+    public boolean reduceProductQuantity(String sku, int quantity) {
+        return products.get(sku).reduceQuantity(quantity);
     }
 
     public boolean containsProduct(String name) {
@@ -52,4 +65,11 @@ public class ProductRepository {
         return products.values();
     }
 
+    public List<Product> getProductByName(String name) {
+        return products.values()
+               .stream()
+               .filter(p -> p.getName().toLowerCase().contains(name.toLowerCase()))
+               .toList();
+
+    }
 }
