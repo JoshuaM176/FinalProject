@@ -36,12 +36,18 @@ public class DeletePrototype implements Option {
         int idx = InputValidation.IntegerRangeInput(1, all.size()) - 1;
         Prototype chosen = all.get(idx);
 
-        System.out.printf("Delete prototype \"%s\" (ID: %s)?%n 1=Yes  0=Cancel%n",
-                chosen.getConceptName(), chosen.getId());
+        System.out.printf(
+                "Delete prototype \"%s\" (ID: %s)?%n1=Yes  0=Cancel%n",
+                chosen.getConceptName(), chosen.getId()
+        );
+
         if (InputValidation.IntegerRangeInput(0, 1) == 1) {
-            all.remove(chosen);   // remove from live list
-            repo.save();          // rewrite CSV without it
-            System.out.println("Prototype " + chosen.getId() + " deleted.");
+            boolean removed = repo.delete(chosen);
+            if (removed) {
+                System.out.println("Prototype " + chosen.getId() + " deleted.");
+            } else {
+                System.out.println("ERROR: Could not delete prototype (maybe already removed?).");
+            }
         }
     }
 }

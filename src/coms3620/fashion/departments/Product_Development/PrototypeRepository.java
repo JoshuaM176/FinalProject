@@ -59,4 +59,12 @@ public class PrototypeRepository {
     public List<Prototype> findAll() {
         return Collections.unmodifiableList(cache);
     }
+
+    public boolean delete(Prototype prototype) {
+        boolean removed = cache.remove(prototype);
+        if (removed) {
+            save();   // persist updated list to CSV
+        }
+        return removed;
+    }
 }
