@@ -1,4 +1,5 @@
 package coms3620.fashion.util;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,15 +21,18 @@ public class DataReader implements AutoCloseable {
     }
 
     /**
-     * Reads in one line from the csv, uses the first entry from that line to define the object types of all other elements
-     * The line is then parsed using DataReader.getRow()
-     * 
+     * Reads in one line from the csv, uses the first entry from that line to
+     * define the object types of all other elements The line is then parsed
+     * using DataReader.getRow()
+     *
      * @author Joshua Morningstar
      * @throws Exception
      */
     public Object[] getEncodedRow() throws Exception {
         String line = File.readLine();
-        if(line == null) { return null; }
+        if (line == null) {
+            return null;
+        }
         String[] full_elements = parseLine(line);
         String elementTypes = full_elements[0];
         String[] elements = Arrays.copyOfRange(full_elements, 1, full_elements.length);
@@ -46,22 +50,24 @@ public class DataReader implements AutoCloseable {
      * For example, iss would expect the csv to contain an integer followed by two strings
      * 
      * @author Joshua Morningstar
-     * @throws Exception 
+     * @throws Exception
      */
     public Object[] getRow(String elementTypes) throws Exception {
         String line = File.readLine();
-        if(line == null) { return null; }
+        if (line == null) {
+            return null;
+        }
         String[] elements = parseLine(line);
         return parseElements(elements, elementTypes);
     }
 
     private Object[] parseElements(String[] elements, String elementTypes) throws Exception {
-        if(elements.length != elementTypes.length()) {
+        if (elements.length != elementTypes.length()) {
             throw new LengthMismatchException("Number of elements doesn't match length of elementTypes");
         }
         Object[] objects = new Object[elements.length];
-        for(int i = 0; i < elementTypes.length(); i++) {
-            switch(elementTypes.charAt(i)) {
+        for (int i = 0; i < elementTypes.length(); i++) {
+            switch (elementTypes.charAt(i)) {
                 case 'i':
                     objects[i] = Integer.parseInt(elements[i]);
                     break;
@@ -72,7 +78,7 @@ public class DataReader implements AutoCloseable {
                     objects[i] = LocalDate.parse(elements[i], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     break;
                 case 'b':
-                    objects[i] = elements[i] == "true";
+                    objects[i] = Boolean.parseBoolean(elements[i].trim());
                     break;
                 case 's':
                     objects[i] = elements[i];
@@ -90,23 +96,21 @@ public class DataReader implements AutoCloseable {
         String string = "";
         boolean in_quotes = false;
         boolean start_of_entry = true;
-        for(int i = 0; i < charArray.length; i++) {
-            if(start_of_entry) {
-                if(charArray[i] == '"') {
+        for (int i = 0; i < charArray.length; i++) {
+            if (start_of_entry) {
+                if (charArray[i] == '"') {
                     in_quotes = true;
                     i++;
                 }
                 start_of_entry = false;
             }
-            if((charArray[i] == ',') && ! in_quotes) {
+            if ((charArray[i] == ',') && !in_quotes) {
                 strings.add(string);
                 string = "";
                 start_of_entry = true;
-            }
-            else if(charArray[i] == '"' && in_quotes) {
+            } else if (charArray[i] == '"' && in_quotes) {
                 in_quotes = false;
-            }
-            else {
+            } else {
                 string += charArray[i];
             }
         }
@@ -114,12 +118,13 @@ public class DataReader implements AutoCloseable {
 
         return strings.toArray(new String[0]);
     }
-    
+
     public void close() throws IOException {
         File.close();
     }
 
     public class LengthMismatchException extends IOException {
+
         public LengthMismatchException(String message) {
             super(message);
         }
