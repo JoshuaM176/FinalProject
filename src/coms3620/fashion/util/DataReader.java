@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
@@ -37,6 +40,7 @@ public class DataReader implements AutoCloseable {
      * elementTypes string can contain
      * i - integer
      * u - UUID
+     * d - LocalDate
      * b - boolean
      * s - string
      * For example, iss would expect the csv to contain an integer followed by two strings
@@ -63,6 +67,9 @@ public class DataReader implements AutoCloseable {
                     break;
                 case 'u':
                     objects[i] = UUID.fromString(elements[i]);
+                    break;
+                case 'd':
+                    objects[i] = LocalDate.parse(elements[i], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     break;
                 case 'b':
                     objects[i] = elements[i] == "true";

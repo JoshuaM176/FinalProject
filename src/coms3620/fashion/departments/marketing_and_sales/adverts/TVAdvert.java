@@ -5,14 +5,14 @@ import java.util.UUID;
 import coms3620.fashion.util.InputValidation;
 import coms3620.fashion.util.Stdin;
 
-public class RadioAdvert implements Advert{ 
+public class TVAdvert implements Advert{
 
     private String name;
     private UUID id;
     private int quarterlyCost;
     private String mediaPath;
 
-    private static String type = "Radio Advert";
+    private static String type = "TV Advert";
 
     @Override
     public String getMedia() {

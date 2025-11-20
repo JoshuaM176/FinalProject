@@ -1,6 +1,9 @@
 package coms3620.fashion.departments.marketing_and_sales;
 import coms3620.fashion.departments.marketing_and_sales.adverts.Advert;
+import coms3620.fashion.departments.marketing_and_sales.adverts.AdvertisingRelationship;
+import coms3620.fashion.departments.marketing_and_sales.adverts.PublishedAdvert;
 import coms3620.fashion.util.DataWriter;
+import coms3620.fashion.util.InputValidation;
 import coms3620.fashion.util.DataReader;
 
 import java.io.FileNotFoundException;
@@ -13,16 +16,35 @@ import java.util.Objects;
 public class AdvertManager {
 
     private List<Advert> adverts = new ArrayList<Advert>();
+    private List<PublishedAdvert> publishedAdverts = new ArrayList<PublishedAdvert>();
+    private List<AdvertisingRelationship> advertisingRelationships = new ArrayList<AdvertisingRelationship>();
     private AdvertFactory advertFactory = new AdvertFactory();
 
     public void loadData() {
         try {
+            adverts = new ArrayList<Advert>();
             DataReader reader = new DataReader("data/marketing_and_sales/adverts.csv");
-            reader.getEncodedRow(); // Skip header
             Object[] object;
             while((object = reader.getEncodedRow()) != null) {
                 Advert advert = advertFactory.createAdvertFromObject(object);
+                if(Objects.isNull(advert)) {System.out.println("Error reading in advertisment"); continue;}
                 adverts.add(advert);
+            }
+            reader.close();
+
+            publishedAdverts = new ArrayList<PublishedAdvert>();
+            reader = new DataReader("data/marketing_and_sales/publishedAdverts.csv");
+            while((object = reader.getEncodedRow()) != null) {
+                PublishedAdvert publishedAdvert = new PublishedAdvert(object);
+                publishedAdverts.add(publishedAdvert);
+            }
+            reader.close();
+
+            advertisingRelationships = new ArrayList<AdvertisingRelationship>();
+            reader = new DataReader("data/marketing_and_sales/advertisingRelationships.csv");
+            while((object = reader.getEncodedRow()) != null) {
+                AdvertisingRelationship advertisingRelationship = new AdvertisingRelationship(object);
+                advertisingRelationships.add(advertisingRelationship);
             }
             reader.close();
         }
@@ -36,11 +58,23 @@ public class AdvertManager {
     public void saveData() {
         try {
             DataWriter writer = new DataWriter("data/marketing_and_sales/adverts.csv");
-            writer.putRow("sssss", "type", "name", "pricePerDay", "running", "id");
             for(Advert advert : adverts) {
                 writer.putRow(advert.getRowData());
             }
             writer.close();
+
+            writer = new DataWriter("data/marketing_and_sales/publishedAdverts.csv");
+            for(PublishedAdvert publishedAdvert : publishedAdverts) {
+                writer.putRow(publishedAdvert.getRowData());
+            }
+            writer.close();
+
+            writer = new DataWriter("data/marketing_and_sales/advertisingRelationships.csv");
+            for(AdvertisingRelationship advertisingRelationship : advertisingRelationships) {
+                writer.putRow(advertisingRelationship.getRowData());
+            }
+            writer.close();
+
         } catch (IOException e) {
             System.out.println("Failed to save data");
             System.out.println(e);
@@ -58,16 +92,75 @@ public class AdvertManager {
         }
     }
 
+    public void publishAdvert() {
+        if(advertisingRelationships.size() == 0) {
+            System.out.println("Error, no advertising relationships to use for publishing.");
+            return;
+        }
+        String[] advertNames = new String[adverts.size()];
+        for(int i = 0; i < adverts.size(); i++) {
+            advertNames[i] = adverts.get(i).getName();
+        }
+        String[] companyNames = new String[advertisingRelationships.size()];
+        for(int i = 0; i < advertisingRelationships.size(); i++) {
+            companyNames[i] = advertisingRelationships.get(i).getName();
+        }
+        Advert advertToPublish = adverts.get(InputValidation.OptionsInput(advertNames));
+        System.out.println("What company will be running the advert?");
+        String companyName = companyNames[InputValidation.OptionsInput(companyNames)];
+        PublishedAdvert publishedAdvert = new PublishedAdvert(advertToPublish.getName(), advertToPublish.getType(), advertToPublish.getQuarterlyCost(), advertToPublish.getId(), 1, companyName);
+        publishedAdverts.add(publishedAdvert);
+    }
+
+    public void approveAdverts() {
+
+    }
+
     public void addAdvert(Advert advert) {
         adverts.add(advert);
     }
 
-    public String toString() {
-        String string = "pricePerDay, name, type, running, id\n";
+    public void viewAdverts() {
+        System.out.println("name, quarterlyCost, type, id");
         for(Advert advert : adverts) {
-            string += advert.pricePerDay + ", "+ advert.name + ", " + advert.getType() + ", " + advert.getRunning() + ", " + advert.getId() + "\n";
+            System.out.println(advert.getName() + ", " + advert.getQuarterlyCost() + ", " + advert.getType() + ", " + advert.getId());
         }
-        return string;
+    }
+
+    public void viewPublishedAdverts() {
+        System.out.println("type, name, quarterlyCost, id, startDate, endDate, approvalStatus, advertCompany");
+        for(PublishedAdvert advert : publishedAdverts) {
+            Object[] data = advert.getRowData();
+            for(Object object : data) {
+                System.out.println(object + ", ");
+            }
+        }
+    }
+
+    public void createAdvertisingRelationship() {
+        AdvertisingRelationship advertisingRelationship = new AdvertisingRelationship();
+        advertisingRelationships.add(advertisingRelationship);
+    }
+
+    public void viewAdvertisingRelationships() {
+        System.out.println("companyName, approvalStatus contractFile");
+        for(AdvertisingRelationship advertisingRelationship : advertisingRelationships) {
+            System.out.println(advertisingRelationship.getName() + ", " + advertisingRelationship.getApprovalStatus());
+        }
+    }
+
+    public void manageAdvertisingRelationships() {
+        // TODO
+    }
+
+    public List<AdvertisingRelationship> getApprovedAdvertisers() {
+        List<AdvertisingRelationship> approvedAdvertisers = new ArrayList<AdvertisingRelationship>();
+        for(AdvertisingRelationship advertisingRelationship : advertisingRelationships) {
+            if(advertisingRelationship.getApprovalStatus() == "approved") {
+                approvedAdvertisers.add(advertisingRelationship);
+            }
+        }
+        return approvedAdvertisers;
     }
 
 }

@@ -1,4 +1,5 @@
 package coms3620.fashion;
+import coms3620.fashion.util.Stdin;
 
 public class Main {
 
@@ -31,7 +32,7 @@ public class Main {
 """
         );
         System.out.print("\033[0m"); // reset color
-        new java.util.Scanner(System.in).nextLine(); // pause
+        Stdin.nextLine(); // pause
     }
 
 }

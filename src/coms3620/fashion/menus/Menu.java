@@ -26,7 +26,7 @@ public abstract class Menu {
         while(true) {
             user_input = Stdin.nextInt();
             if(user_input<0 || user_input > options.size()) {
-                System.out.println("Invalid option, please enter a number from 0 to " + (options.size()-1) + ".");
+                System.out.println("Invalid option, please enter a number from 0 to " + (options.size()) + ".");
             }
             else {
                 break;
