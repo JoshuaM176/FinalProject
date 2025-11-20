@@ -1,6 +1,9 @@
 package coms3620.fashion.util;
 import java.util.Random;
 
+/**
+ * @author Joseph Hennings
+ */
 public class RandStringGenerator {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 

@@ -2,6 +2,9 @@ package coms3620.fashion.departments.logistics.order;
 
 import coms3620.fashion.departments.logistics.Product;
 
+/**
+ * @author Joseph Hennings
+ */
 public class OrderLine {
     private final Product product;
     private int quantity;

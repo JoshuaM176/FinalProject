@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import coms3620.fashion.departments.logistics.Product;
+import coms3620.fashion.departments.logistics.Status;
 import coms3620.fashion.departments.logistics.Trackable;
 
-
+/**
+ * @author Joseph Hennings
+ */
 public class Order implements Trackable {
     private final String id;
     private final List<OrderLine> orderLines;
@@ -107,5 +110,4 @@ public class Order implements Trackable {
     public List<OrderLine> getOrderLines() {
         return this.orderLines;
     }
-
 }

@@ -7,6 +7,9 @@ import coms3620.fashion.departments.logistics.LogisticsManager;
 import coms3620.fashion.departments.logistics.Product;
 import coms3620.fashion.menus.Option;
 
+/**
+ * @author Joseph Hennings
+ */
 public class ViewProducts implements Option {
     private LogisticsManager logisticsManager;
 

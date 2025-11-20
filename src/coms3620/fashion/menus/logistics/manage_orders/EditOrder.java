@@ -9,6 +9,9 @@ import coms3620.fashion.util.Stdin;
 import coms3620.fashion.departments.logistics.order.Order;
 import coms3620.fashion.departments.logistics.order.OrderLine;
 
+/**
+ * @author Joseph Hennings
+ */
 public class EditOrder implements Option {
     private LogisticsManager logisticsManager;
 

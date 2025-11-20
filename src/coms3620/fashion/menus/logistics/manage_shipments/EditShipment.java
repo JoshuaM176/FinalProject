@@ -11,6 +11,9 @@ import coms3620.fashion.menus.logistics.manage_orders.EditOrder;
 import coms3620.fashion.menus.logistics.manage_orders.ViewOrders;
 import coms3620.fashion.util.Stdin;
 
+/**
+ * @author Joseph Hennings
+ */
 public class EditShipment extends Menu implements Option  {
     private LogisticsManager logisticsManager;
 
@@ -64,5 +67,4 @@ public class EditShipment extends Menu implements Option  {
             editShipment(shipment);
         }
     }
-    
 }

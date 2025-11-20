@@ -7,10 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import coms3620.fashion.departments.logistics.Product;
+import coms3620.fashion.departments.logistics.Status;
 import coms3620.fashion.departments.logistics.Trackable;
 import coms3620.fashion.departments.logistics.order.Order;
 import coms3620.fashion.departments.logistics.order.OrderLine;
 
+/**
+ * @author Joseph Hennings
+ */
 public class Shipment implements Trackable {
     private String id;
     private List<Order> orders = new ArrayList<>();
@@ -78,7 +82,6 @@ public class Shipment implements Trackable {
             return sb.toString();
         }
 
-        // Column headers (no Size column)
         sb.append(String.format(
             "%-40s %-25s %-10s %-12s %-12s\n",
             "Product", "SKU", "Qty", "Price", "Line Total"

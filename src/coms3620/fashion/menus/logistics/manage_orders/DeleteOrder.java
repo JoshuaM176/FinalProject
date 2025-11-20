@@ -8,6 +8,9 @@ import coms3620.fashion.departments.logistics.order.OrderLine;
 import coms3620.fashion.menus.Option;
 import coms3620.fashion.util.Stdin;
 
+/**
+ * @author Joseph Hennings
+ */
 public class DeleteOrder implements Option {
     private LogisticsManager logisticsManager;
 

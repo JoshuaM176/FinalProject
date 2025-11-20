@@ -6,6 +6,9 @@ import coms3620.fashion.menus.Option;
 import coms3620.fashion.menus.logistics.manage_orders.ViewOrders;
 import coms3620.fashion.util.Stdin;
 
+/**
+ * @author Joseph Hennings
+ */
 public class CreateShipment implements Option {
     private LogisticsManager logisticsManager;
 

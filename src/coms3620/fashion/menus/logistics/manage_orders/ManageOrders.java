@@ -4,6 +4,9 @@ import coms3620.fashion.departments.logistics.LogisticsManager;
 import coms3620.fashion.menus.Menu;
 import coms3620.fashion.menus.Option;
 
+/**
+ * @author Joseph Hennings
+ */
 public class ManageOrders extends Menu implements Option {
 
     public ManageOrders(LogisticsManager lm) {
