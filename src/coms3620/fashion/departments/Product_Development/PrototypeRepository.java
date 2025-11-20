@@ -16,7 +16,7 @@ public class PrototypeRepository {
         this.filePath = filePath;
         File f = new File(filePath);
         if (f.exists() && f.length() > 0) {
-            load();                       // read only when there is data
+            load();
         } else {
             System.out.println("Repository: no existing CSV (“" + filePath + "”) – starting empty.");
         }
@@ -25,9 +25,9 @@ public class PrototypeRepository {
     /*  load from CSV  */
     private void load() {
         try (DataReader dr = new DataReader(filePath)) {
-            dr.getRow("sssb");        // skip header
+            dr.getRow("ssss");        // skip header
             Object[] row;
-            while ((row = dr.getRow("ussb")) != null) { // UUID, String, String, boolean
+            while ((row = dr.getRow("ussb")) != null) {
                 UUID id = (UUID) row[0];
                 String concept = (String) row[1];
                 String materials = (String) row[2];
@@ -58,5 +58,13 @@ public class PrototypeRepository {
 
     public List<Prototype> findAll() {
         return Collections.unmodifiableList(cache);
+    }
+
+    public boolean delete(Prototype prototype) {
+        boolean removed = cache.remove(prototype);
+        if (removed) {
+            save();   // persist updated list to CSV
+        }
+        return removed;
     }
 }

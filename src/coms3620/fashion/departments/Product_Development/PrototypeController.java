@@ -1,6 +1,7 @@
 package coms3620.fashion.departments.product_development;
 
 public class PrototypeController {
+
     private final MaterialManager materialManager;
     private final PrototypeRepository repo;
 
@@ -15,7 +16,6 @@ public class PrototypeController {
             return;
         }
         Prototype p = new Prototype(concept, materials);
-        p.approve();
         repo.add(p);
         System.out.println("OK: Prototype created and saved. UUID = " + p.getId());
     }
