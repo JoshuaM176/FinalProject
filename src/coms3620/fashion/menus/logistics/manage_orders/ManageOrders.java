@@ -10,12 +10,12 @@ public class ManageOrders extends Menu implements Option {
         CreateOrder createOrder = new CreateOrder(lm);
         ViewOrders viewOrders = new ViewOrders(lm);
         DeleteOrder deleteOrder = new DeleteOrder(lm);
-        ViewAvailableProducts viewAvailableProducts = new ViewAvailableProducts(lm);
+        EditOrder editOrder = new EditOrder(lm);
 
         addOption(createOrder);
         addOption(viewOrders);
         addOption(deleteOrder);
-        addOption(viewAvailableProducts);
+        addOption(editOrder);
     }
 
     @Override

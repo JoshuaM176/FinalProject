@@ -30,11 +30,13 @@ public class LogisticsManager {
         return order;
     }
 
-    public void createShipment() {
+    public Shipment createShipment() {
         String id = randString.generateRandomString(8);
         Shipment shipment = new Shipment(new ArrayList<>(orders), id);
         shipments.add(shipment);
         orders.clear();
+
+        return shipment;
     }
 
     public boolean containsProduct(String name) {
@@ -43,6 +45,10 @@ public class LogisticsManager {
 
     public boolean reduceProductQuantity(String sku, int amount) {
         return productRepository.reduceProductQuantity(sku, amount);
+    }
+
+    public void increaseProductQuantity(String sku, int amount) {
+        productRepository.increaseProductQuantity(sku, amount);
     }
 
     public List<Order> getOrders() {

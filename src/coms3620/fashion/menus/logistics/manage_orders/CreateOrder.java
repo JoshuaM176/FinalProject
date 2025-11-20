@@ -10,6 +10,9 @@ import coms3620.fashion.departments.logistics.order.OrderLine;
 import coms3620.fashion.menus.Option;
 import coms3620.fashion.util.Stdin;
 
+/**
+ * @author Joseph Hennings
+ */
 public class CreateOrder implements Option {
     private LogisticsManager logisticsManager;
 
@@ -25,61 +28,26 @@ public class CreateOrder implements Option {
     @Override
     public void run() {
         System.out.println();
-        ViewAvailableProducts viewAvailableProducts = new ViewAvailableProducts(logisticsManager);
-        viewAvailableProducts.run();
+        new ViewProducts(logisticsManager).run();
+        AddProduct addProduct = new AddProduct(logisticsManager);
         List<OrderLine> orderLines = new ArrayList<>();
         boolean keepAdding = true;
 
         do {
             System.out.print("Enter keyword(s) -- > ");
-            String keyWord = Stdin.nextLine();
+            String keyword = Stdin.nextLine();
             System.out.println();
 
-            List<Product> matches = logisticsManager.findProductsByName(keyWord);
+            List<Product> matches = logisticsManager.findProductsByName(keyword);
 
             while (matches.isEmpty()) {
                 System.out.print("No products match that keyword, please try again --> ");
-                keyWord = Stdin.nextLine();
+                keyword = Stdin.nextLine();
                 System.out.println();
-                matches = logisticsManager.findProductsByName(keyWord);
+                matches = logisticsManager.findProductsByName(keyword);
             }
 
-            if (matches.size() == 1)
-                System.out.println("1 product found:");
-            else
-                System.out.println(matches.size() + " products found:");
-            
-            System.out.printf("%-33s %-20s %-10s %-10s %-10s\n",
-                "Name", "SKU", "Size", "Price", "Stock");
-            System.out.println("-----------------------------------------------------------------------------------");
-            int index = 1;
-            for (Product p : matches) {
-                viewAvailableProducts.productFormatter(p, index++);
-            }
-
-            System.out.println();
-            System.out.print("Choose product number --> ");
-            int choice = Stdin.nextInt();
-            System.out.println();
-
-            while (choice <= 0 || choice > matches.size()) {
-                System.out.print("Invalid. Please try again --> ");
-                choice = Stdin.nextInt();
-                System.out.println();
-            }
-
-            Product p = matches.get(choice - 1);
-
-            System.out.print("Enter product quantity --> ");
-            int quantity = Stdin.nextInt();
-            System.out.println();
-
-            while (!logisticsManager.reduceProductQuantity(p.getSKU(), quantity)) {
-                System.out.print("Insufficient stock, only " + p.getQuantity() + " remaining. please try again --> ");
-                quantity = Stdin.nextInt();
-                System.out.println();
-            }
-            orderLines.add(new OrderLine(p, quantity));
+            addProduct.addProductToOrder(matches, orderLines);
 
             System.out.println("Add another product?");
             System.out.print("[Y]es / [N]o --> ");
@@ -89,52 +57,12 @@ public class CreateOrder implements Option {
 
         } while(keepAdding);
 
-        Order order = logisticsManager.createOrder(orderLines);
-        System.out.println("New order was successfully made, id: " + order.getID());
+        if (orderLines.size() > 0) {
+            Order order = logisticsManager.createOrder(orderLines);
+            System.out.println("New order was successfully made, id: " + order.getID());
+        }
+        else {
+            System.out.println("Order was not made.");
+        }
     }
-
-    // @Override
-    // public void run() {
-    //     System.out.println();
-    //     new ViewAvailableProducts(logisticsManager).run();
-    //     List<OrderLine> orderLines = new ArrayList<>();
-    //     boolean keepAdding = true;
-
-    //     do {
-    //         System.out.print("Enter name of the product --> ");
-    //         String name = Stdin.nextLine();
-    //         System.out.println();
-
-    //         while (!logisticsManager.containsProduct(name)) {
-    //             System.out.print("Invalid product name, please try again --> ");
-    //             name = Stdin.nextLine();
-    //             System.out.println();
-    //         }
- 
-    //         System.out.print("Enter product quantity --> ");
-    //         int quantity = Stdin.nextInt();
-    //         System.out.println();
-
-    //         while (!logisticsManager.reduceProductQuantity(name, quantity)) {
-    //             System.out.print("Invalid quantity, please try again --> ");
-    //             quantity = Stdin.nextInt();
-    //             System.out.println();
-    //         }
-
-    //         Product p = logisticsManager.getProductByName(name);
-    //         orderLines.add(new OrderLine(p, quantity));
-
-    //         System.out.println();
-    //         System.out.println("Add another product?");
-    //         System.out.print("[Y]es / [N]o --> ");
-    //         char choice = Stdin.nextLine().charAt(0);
-    //         keepAdding = choice == 'y';
-    //         System.out.println();
-
-    //     } while (keepAdding);
-
-    //     Order order = logisticsManager.createOrder(orderLines);
-    //     System.out.println("New order was successfully made, id: " + order.getID());
-    //     System.out.println();
-    // }
 }

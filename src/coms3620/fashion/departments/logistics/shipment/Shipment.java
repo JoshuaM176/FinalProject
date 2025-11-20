@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import coms3620.fashion.departments.logistics.Product;
 import coms3620.fashion.departments.logistics.Trackable;
 import coms3620.fashion.departments.logistics.order.Order;
 import coms3620.fashion.departments.logistics.order.OrderLine;
@@ -31,98 +32,24 @@ public class Shipment implements Trackable {
         }
     }
 
-    public String getID() {
-        return this.id;
-    }
-
     public void ship() {
         this.status = Status.SHIPPED;
         for (Order order : orders) 
             order.ship();
     }
 
-    public String getStatus() {
-        return status.toString();
-    }
-
-    public String generateInvoice() {
-        compileQuantities();
-        HashSet<String> seen = new HashSet<>();
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("=========== Fashion Logistics Invoice =============\n")
-            .append("Shipment ID: ").append(id).append("\n")
-            .append("Orders: ");
-        for (Order order : orders)
-            sb.append(order.getID())
-                .append(" ");
-        sb.append("\n---------------------------------------------------\n")
-            .append(String.format("%-25s %-20s %-8s\n", "Product", "SKU", "Qty"));
-        for (Order order : orders) {
-            for (OrderLine ol : order.getOrderLines()) {
-                String sku = ol.getProductSku();
-                if (productQuantities.containsKey(sku) && !seen.contains(sku)) {
-                        sb.append(String.format("%-25s %-20s %-8d\n",
-                        ol.getProductName(),
-                        ol.getProductSku(),
-                        productQuantities.get(sku)));
-                        seen.add(sku);
-                    }
-            }
-        }
-        sb.append("---------------------------------------------------\n")
-            .append("Total items: ")
-            .append(productQuantities.values().stream().mapToInt(Integer::intValue).sum())
-            .append("\n")
-            .append("Status: ").append(status).append("\n")
-            .append("===================================================\n");
-
-        return sb.toString();
+    public List<Order> getOrders() {
+        return this.orders;
     }
 
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        HashSet<String> seen = new HashSet<>();
+    public String getID() {
+        return this.id;
+    }
 
-        sb.append("Shipment ID: ").append(id).append("\n");
-        sb.append("Status: ").append(status).append("\n\n");
-
-        if (productQuantities.isEmpty())
-            sb.append(". (No products finalized yet.)");
-        else {
-            sb.append("Orders in shipment (by order no.):\n");
-            int totalQuantity = 0;
-            sb.append("  ");
-            for (Order order : orders) {
-                if (order.equals(orders.get(orders.size()-1)))
-                    sb.append(order.getID());
-                else
-                    sb.append(order.getID()).append(", ");
-            }
-            sb.append("\n\n")
-            .append("Products in this shipment:\n");
-      
-            for (Order order : orders) {
-                for (OrderLine ol : order.getOrderLines()) {
-                    String sku = ol.getProductSku();
-                    if (productQuantities.containsKey(sku) && !seen.contains(sku)) {
-                        sb.append("  ")
-                        .append(ol)
-                        .append(" - quantity: ")
-                        .append(productQuantities.get(sku))
-                        .append("\n");
-                        totalQuantity += productQuantities.get(sku);
-                        seen.add(sku);
-                    }
-                }
-            }
-            sb.append("Shipment quantity: ")
-                .append(totalQuantity)
-                .append("\n");
-        }
-
-        return sb.toString();
+    @Override
+    public String getStatus() {
+        return status.toString();
     }
 
     @Override
@@ -130,4 +57,71 @@ public class Shipment implements Trackable {
         this.status = status;
     }
 
+    public String generateInvoice() {
+        compileQuantities();
+        HashSet<String> seen = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("========================================== Shipment Invoice ==========================================\n")
+        .append("Shipment ID: ").append(id).append("\n")
+        .append("Status: ").append(status).append("\n")
+        .append("Orders Included: ");
+
+        for (Order order : orders)
+            sb.append(order.getID()).append(" ");
+
+        sb.append("\n------------------------------------------------------------------------------------------------------\n");
+
+        if (productQuantities.isEmpty()) {
+            sb.append("  (No products added or shipment not finalized)\n")
+            .append("======================================================================================================\n");
+            return sb.toString();
+        }
+
+        // Column headers (no Size column)
+        sb.append(String.format(
+            "%-40s %-25s %-10s %-12s %-12s\n",
+            "Product", "SKU", "Qty", "Price", "Line Total"
+        ));
+
+        sb.append("------------------------------------------------------------------------------------------------------\n");
+
+        int totalQuantity = 0;
+        double totalCost = 0.0;
+
+        for (Order order : orders) {
+            for (OrderLine ol : order.getOrderLines()) {
+                Product p = ol.getProduct();
+                String sku = p.getSKU();
+
+                if (productQuantities.containsKey(sku) && !seen.contains(sku)) {
+                    int qty = productQuantities.get(sku);
+                    double price = p.getPrice();
+                    double lineTotal = qty * price;
+
+                    sb.append(String.format(
+                        "%-40s %-25s %-10d $%-11.2f $%-11.2f\n",
+                        p.getName(),
+                        p.getSKU(),
+                        qty,
+                        price,
+                        lineTotal
+                    ));
+
+                    totalQuantity += qty;
+                    totalCost += lineTotal;
+                    seen.add(sku);
+                }
+            }
+        }
+
+        sb.append("------------------------------------------------------------------------------------------------------\n")
+        .append(String.format(
+            "%-40s %-25s %-10s %-12s $%-11.2f\n",
+            "Totals:", "", totalQuantity, "", totalCost
+        ))
+        .append("======================================================================================================\n");
+
+        return sb.toString();
+    }
 }

@@ -11,6 +11,10 @@ public class OrderLine {
         this.quantity = quantity;
     }
 
+    public Product getProduct() {
+        return this.product;
+    }
+
     public String getProductName() {
         return product.getName();
     }
@@ -21,5 +25,14 @@ public class OrderLine {
 
     public int getQuantity() {
         return this.quantity;
+    }
+
+    public void refundQuantity() {
+        this.product.increaseQuantity(quantity);
+        this.quantity = 0;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

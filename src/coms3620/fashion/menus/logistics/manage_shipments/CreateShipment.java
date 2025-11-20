@@ -1,6 +1,7 @@
 package coms3620.fashion.menus.logistics.manage_shipments;
 
 import coms3620.fashion.departments.logistics.LogisticsManager;
+import coms3620.fashion.departments.logistics.shipment.Shipment;
 import coms3620.fashion.menus.Option;
 import coms3620.fashion.menus.logistics.manage_orders.ViewOrders;
 import coms3620.fashion.util.Stdin;
@@ -24,12 +25,14 @@ public class CreateShipment implements Option {
             return;
         else {
             System.out.println("Ship these orders?");
-            System.out.print("(1 = yes, 2 = no) --> ");
-            int shipOrders = Stdin.nextInt();
-            if (shipOrders != 1)
-                return;
+            System.out.print("[Y]es / [N]o --> ");
+            char shipChoice = Stdin.nextLine().charAt(0);
+            boolean ship = shipChoice == 'Y' || shipChoice == 'y';
+            if (!ship)
+                System.out.println("Shipment was not made.");
             else {
-                logisticsManager.createShipment();
+                Shipment shipment = logisticsManager.createShipment();
+                System.out.println("New shipment was successfully made, id: " + shipment.getID());
             }
         }
     }
