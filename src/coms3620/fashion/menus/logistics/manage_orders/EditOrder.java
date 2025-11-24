@@ -145,7 +145,7 @@ public class EditOrder implements Option {
                     needed = 0;
             }
             selected.setQuantity(newQty);
-            System.err.println("Quantity increased.");
+            System.out.println("Quantity increased.");
         }
         order.finalizeOrder();
     }
