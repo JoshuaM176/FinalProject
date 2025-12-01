@@ -9,6 +9,7 @@ import coms3620.fashion.departments.marketing_and_sales.adverts.AdvertisingRelat
 import coms3620.fashion.departments.marketing_and_sales.adverts.PublishedAdvert;
 import coms3620.fashion.util.DataReader;
 import coms3620.fashion.util.DataWriter;
+import coms3620.fashion.util.InputValidation;
 
 public class LegalManager {
 
@@ -64,7 +65,59 @@ public class LegalManager {
         
     }
 
+    public List<PublishedAdvert> getPendingAdverts() {
+        List<PublishedAdvert> pendingAdverts = new ArrayList<>();
+        for(PublishedAdvert advert : publishedAdverts) {
+            if(advert.getApprovalStatus() == "waiting for legal") {
+                pendingAdverts.add(advert);
+            }
+        }
+        return pendingAdverts;
+    }
+
+    public List<AdvertisingRelationship> getPendingAdvertisingRelationships() {
+        List<AdvertisingRelationship> pendingAdvertisingRelationships = new ArrayList<>();
+        for(AdvertisingRelationship relationship : advertisingRelationships) {
+            if(relationship.getApprovalStatus() == "waiting for legal") {
+                pendingAdvertisingRelationships.add(relationship);
+            }
+        }
+        return pendingAdvertisingRelationships;
+    }
+
     public void approveAdvert() {
-        // TODO
+        List<PublishedAdvert> pendingAdverts = getPendingAdverts();
+        if(pendingAdverts.size() == 0) {
+            System.out.println("Error, no adverts to approve.");
+            return;
+        }
+        String[] advertNames = new String[pendingAdverts.size()];
+        for(int i = 0; i < pendingAdverts.size(); i++) {
+            advertNames[i] = pendingAdverts.get(i).getName();
+        }
+        String[] companyNames = new String[advertisingRelationships.size()];
+        for(int i = 0; i < advertisingRelationships.size(); i++) {
+            companyNames[i] = advertisingRelationships.get(i).getName();
+        }
+        PublishedAdvert advertToPublish = pendingAdverts.get(InputValidation.OptionsInput(advertNames));
+        advertToPublish.draftLegal();
+    }
+
+    public void approveAdvertisingRelationship() {
+        List<AdvertisingRelationship> pendingRelationships = getPendingAdvertisingRelationships();
+        if(pendingRelationships.size() == 0) {
+            System.out.println("Error, no advertising relationships to approve.");
+            return;
+        }
+        String[] advertNames = new String[pendingRelationships.size()];
+        for(int i = 0; i < pendingRelationships.size(); i++) {
+            advertNames[i] = pendingRelationships.get(i).getName();
+        }
+        String[] companyNames = new String[advertisingRelationships.size()];
+        for(int i = 0; i < advertisingRelationships.size(); i++) {
+            companyNames[i] = advertisingRelationships.get(i).getName();
+        }
+        AdvertisingRelationship relationshipToApprove = pendingRelationships.get(InputValidation.OptionsInput(advertNames));
+        relationshipToApprove.draftLegal();
     }
 }

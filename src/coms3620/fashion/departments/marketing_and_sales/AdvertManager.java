@@ -113,7 +113,12 @@ public class AdvertManager {
     }
 
     public void approveAdverts() {
-
+        String[] advertNames = new String[publishedAdverts.size()];
+        for(int i = 0; i < publishedAdverts.size(); i++) {
+            advertNames[i] = publishedAdverts.get(i).getName();
+        }
+        PublishedAdvert advertToApprove = publishedAdverts.get(InputValidation.OptionsInput(advertNames));
+        advertToApprove.run();
     }
 
     public void addAdvert(Advert advert) {
@@ -147,6 +152,15 @@ public class AdvertManager {
         for(AdvertisingRelationship advertisingRelationship : advertisingRelationships) {
             System.out.println(advertisingRelationship.getName() + ", " + advertisingRelationship.getApprovalStatus());
         }
+    }
+
+    public void approveAdvertisingRelationship() {
+        String[] advertNames = new String[advertisingRelationships.size()];
+        for(int i = 0; i < advertisingRelationships.size(); i++) {
+            advertNames[i] = advertisingRelationships.get(i).getName();
+        }
+        AdvertisingRelationship advertToApprove = advertisingRelationships.get(InputValidation.OptionsInput(advertNames));
+        advertToApprove.run();
     }
 
     public void manageAdvertisingRelationships() {

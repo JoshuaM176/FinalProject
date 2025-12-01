@@ -10,6 +10,7 @@ public class Legal extends Menu implements Option {
 
     public Legal() {
         addOption(new ProcessAdverts(legalManager));
+        addOption(new ProcessAdvertisingRelationship(legalManager));
     }
 
     @Override

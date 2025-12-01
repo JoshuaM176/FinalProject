@@ -2,7 +2,9 @@ package coms3620.fashion.departments.marketing_and_sales.adverts;
 
 import java.util.UUID;
 
-public interface Publishable{
+import coms3620.fashion.menus.marketing_and_sales.Approvable;
+
+public interface Publishable extends Approvable{
 
     public String getName();
     public String getType();

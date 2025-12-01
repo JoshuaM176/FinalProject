@@ -11,6 +11,7 @@ public class TVAdvert implements Advert{
     private UUID id;
     private int quarterlyCost;
     private String mediaPath;
+    private String approvalStatus = "pending";
 
     private static String type = "TV Advert";
 
@@ -61,6 +62,16 @@ public class TVAdvert implements Advert{
     @Override
     public Object[] getRowData() {
         return new Object[]{"ssisu", getType(), getName(), getQuarterlyCost(), mediaPath, getId()};
+    }
+
+    @Override
+    public String getApprovalStatus() {
+        return approvalStatus;
+    }
+
+    @Override
+    public void setApprovalStatus(String status) {
+        approvalStatus = status;
     }
     
 }

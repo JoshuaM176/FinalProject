@@ -5,6 +5,7 @@ import coms3620.fashion.menus.marketing_and_sales.MarketingAndSales;
 import coms3620.fashion.menus.productdevelopment.ProductDevelopment;
 import coms3620.fashion.menus.logistics.Logistics;
 import coms3620.fashion.menus.human_resources.HumanResources;
+import coms3620.fashion.menus.legal.Legal;
 
 public class FashionManager extends Menu {
 
@@ -19,5 +20,6 @@ public class FashionManager extends Menu {
         addOption(logistics);
         addOption(human_resources);
         addOption(product_development);
+        addOption(new Legal());
     }
 }
