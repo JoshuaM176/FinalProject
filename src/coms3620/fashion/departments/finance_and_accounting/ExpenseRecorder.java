@@ -1,50 +1,57 @@
 package coms3620.fashion.departments.finance_and_accounting;
 
-import java.io.*;
-import java.nio.file.*;
+import coms3620.fashion.util.Stdin;
+
 import java.time.LocalDate;
-import java.util.UUID;
 
+/**
+ * Helper class to create expenses from user input
+ * and delegate recording to BudgetManager.
+ */
 public class ExpenseRecorder {
-    private final Path ledgerFile = Paths.get("data/finance/ledger.txt");
 
-    public void recordExpense(String dept, double amount, String vendor, String category, String description) {
-        try {
-            Files.createDirectories(ledgerFile.getParent());
-            boolean exists = Files.exists(ledgerFile);
-            try (BufferedWriter bw = Files.newBufferedWriter(ledgerFile, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
-                if (!exists) {
-                    bw.write("id,dept,date,amount,vendor,category,description");
-                    bw.newLine();
-                }
-                String id = UUID.randomUUID().toString();
-                String date = LocalDate.now().toString();
-                bw.write(String.join(",", id, dept, date, String.valueOf(amount), vendor, category, description));
-                bw.newLine();
-                System.out.println("Expense recorded for " + dept + ": $" + amount);
-            }
-        } catch (IOException e) {
-            System.out.println("Error recording expense: " + e.getMessage());
-        }
+    private final BudgetManager budgetManager;
+
+    public ExpenseRecorder(BudgetManager budgetManager) {
+        this.budgetManager = budgetManager;
     }
 
-    public void showLedger() {
-        try {
-            if (Files.exists(ledgerFile)) {
-                System.out.println("=== Expense Ledger ===");
-                Files.lines(ledgerFile).forEach(System.out::println);
-            } else {
-                System.out.println("No expenses recorded yet.");
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading ledger: " + e.getMessage());
-        }
-    }
+    /**
+     * Prompts the user for expense details and records
+     * the expense against the chosen department.
+     */
+    public void recordExpenseFromInput() {
+        System.out.println("--- Record Expense ---");
 
-    // For quick testing
-    public static void main(String[] args) {
-        ExpenseRecorder er = new ExpenseRecorder();
-        er.recordExpense("FIN", 250.00, "Office Depot", "Supplies", "Printer ink");
-        er.showLedger();
+        System.out.print("Department name: ");
+        String dept = Stdin.nextLine().trim();
+        if (dept.isEmpty()) {
+            System.out.println("No department entered, cancelling.");
+            return;
+        }
+
+        System.out.print("Description: ");
+        String description = Stdin.nextLine().trim();
+
+        System.out.print("Amount (whole number): ");
+        String amountText = Stdin.nextLine().trim();
+        int amount;
+        try {
+            amount = Integer.parseInt(amountText);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid amount, cancelling.");
+            return;
+        }
+        if (amount <= 0) {
+            System.out.println("Amount must be positive, cancelling.");
+            return;
+        }
+
+        String date = LocalDate.now().toString();
+        budgetManager.recordExpense(dept, description, amount, date);
+
+        int remaining = budgetManager.getRemaining(dept);
+        System.out.println("Expense recorded. Remaining budget for "
+                + dept + ": " + remaining);
     }
 }
