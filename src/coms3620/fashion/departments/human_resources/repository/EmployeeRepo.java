@@ -22,7 +22,7 @@ public class EmployeeRepo {
 
                 int id = Integer.parseInt(data[0]);
                 String name = data[1].trim();
-                String level = data[2].trim();
+                Employee.RoleLevel level = Employee.RoleLevel.valueOf(data[2].trim().toUpperCase());
                 String location = data[3].trim();
                 String title = data[4].trim();
                 int salary = Integer.parseInt(data[5].trim());
@@ -45,14 +45,13 @@ public class EmployeeRepo {
                 pw.println(String.join(",",
                         String.valueOf(e.getId()),
                         e.getName(),
-                        e.getLevel(),
+                        e.getRoleLevel().name(),
                         e.getLocation(),
                         e.getTitle(),
                         String.valueOf(e.getSalary())
                 ));
             }
 
-            System.out.println("💾 Employee list saved to " + FILE_NAME);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,4 +61,14 @@ public class EmployeeRepo {
     public List<Employee> getEmployees() {
         return employees;
     }
+
+    public Employee findEmployeeById(int id) {
+        for (Employee e : employees) {
+            if (e.getId() == id) {
+                return e;
+            }
+        }
+        return null; // not found
+    }
+
 }

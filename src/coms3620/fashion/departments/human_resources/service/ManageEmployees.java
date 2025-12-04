@@ -31,7 +31,7 @@ public class ManageEmployees {
 
         System.out.println("\n--- Employee List ---");
         for (Employee e : list) {
-            System.out.println(e.getId() + " - " + e.getName());
+            System.out.println(e.getId() + " - " + e.getName() +  " - " + e.getSalary());
         }
     }
 
@@ -57,7 +57,7 @@ public class ManageEmployees {
         }
     }
 
-    public void addEmployee(int id, String name, String level, String location, String title, int salary) {
+    public void addEmployee(int id, String name, Employee.RoleLevel level, String location, String title, int salary) {
         // Check if employee already exists
         for (Employee e : employees) {
             if (e.getId() == id) {
@@ -72,23 +72,39 @@ public class ManageEmployees {
         System.out.println("Added new employee: " + name + " (ID: " + id + ")");
     }
 
+    public boolean employeeExists(int id) {
+        return employeeRepo.findEmployeeById(id) != null;
+    }
+
+
     public void changeSalary(int id, int salary) {
 
-        boolean change = false;
+        Employee target = employeeRepo.findEmployeeById(id);
 
-        Iterator<Employee> iterator = employees.iterator();
-        while (iterator.hasNext()) {
-            Employee e = iterator.next();
-            if (e.getId() == id) {
-                e.setSalary(salary);
-                System.out.println("Employee: " + e.getName() + " has been changed to salary: " + salary);
-                iterator.remove(); // removes from the list
-                change = true;
-                break;
-            }
+        if (target == null) {
+            System.out.println("Employee with ID " + id + " doesn’t exist.");
+            return;
         }
-        if(change){
-            saveEmployees();
-        }
+        target.setSalary(salary);
+        System.out.println(target.getName() + " salary has been changed to " + salary);
+        saveEmployees();
     }
+
+    public void changeRoleLevel(int id, Employee.RoleLevel level) {
+
+        Employee target = employeeRepo.findEmployeeById(id);
+
+        if (target == null) {
+            System.out.println("Employee with ID " + id + " doesn’t exist.");
+            return;
+        }
+
+        target.setRoleLevel(level);
+        System.out.println(target.getName() + " role level has been changed to " + level);
+        saveEmployees();
+    }
+
+
+
+
 }
