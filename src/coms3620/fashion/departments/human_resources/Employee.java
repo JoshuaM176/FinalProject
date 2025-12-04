@@ -52,17 +52,18 @@ public enum RoleLevel {
 }
 
 /*
- * id,name,roleLevel,salary,location,status
-1,Ethan Duong,JUNIOR,45000,Des Moines,ACTIVE
-2,Emma Johnson,SENIOR,72000,Ames,ACTIVE
-3,Michael Smith,MANAGER,92000,Chicago,ACTIVE
-4,Isabella Martinez,JUNIOR,43000,Minneapolis,ACTIVE
-5,Liam Nguyen,SENIOR,76000,Kansas City,ACTIVE
-6,Olivia Brown,JUNIOR,41000,Omaha,ACTIVE
-7,Noah Wilson,MANAGER,88000,Des Moines,ACTIVE
-8,Ava Davis,SENIOR,70000,Ames,ACTIVE
-9,James Thompson,JUNIOR,46000,Chicago,ACTIVE
-10,Sophia Lee,SENIOR,75000,San Francisco,ACTIVE
+id,name,roleLevel,salary,location
+1,Ethan Duong,JUNIOR,45000,Des Moines
+2,Emma Johnson,SENIOR,72000,Ames
+3,Michael Smith,MANAGER,92000,Chicago
+4,Isabella Martinez,JUNIOR,43000,Minneapolis
+5,Liam Nguyen,SENIOR,76000,Kansas City
+6,Olivia Brown,JUNIOR,41000,Omaha
+7,Noah Wilson,MANAGER,88000,Des Moines
+8,Ava Davis,SENIOR,70000,Ames
+9,James Thompson,JUNIOR,46000,Chicago
+10,Sophia Lee,SENIOR,75000,San Francisco
+
 
  */
 
