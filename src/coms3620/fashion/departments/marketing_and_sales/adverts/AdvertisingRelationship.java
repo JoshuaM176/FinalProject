@@ -1,5 +1,7 @@
 package coms3620.fashion.departments.marketing_and_sales.adverts;
 
+import java.io.File;
+
 import coms3620.fashion.menus.marketing_and_sales.Approvable;
 import coms3620.fashion.util.InputValidation;
 import coms3620.fashion.util.Stdin;
@@ -13,8 +15,8 @@ public class AdvertisingRelationship implements Approvable{
 
     public AdvertisingRelationship(Object[] object) {
         name = (String)object[0];
-        contractFile = (String)object[1];
-        approvalStatus = (String)object[2];
+        approvalStatus = (String)object[1];
+        contractFile = (String)object[2];
     };
 
     private String name;
@@ -45,8 +47,15 @@ public class AdvertisingRelationship implements Approvable{
             setApprovalStatus("approved");
             System.out.println("Enter the contract file.");
             contractFile = Stdin.nextLine();
+            try {
+                File file = new File(contractFile);
+            } catch (Exception e) {
+                System.out.println("Contract file not found");
+                setApprovalStatus("Denied");
+            }
         }
         if(response == 1) {
+            System.out.println("A contract file is required.");
             setApprovalStatus("denied");
         }
     }

@@ -68,7 +68,7 @@ public class LegalManager {
     public List<PublishedAdvert> getPendingAdverts() {
         List<PublishedAdvert> pendingAdverts = new ArrayList<>();
         for(PublishedAdvert advert : publishedAdverts) {
-            if(advert.getApprovalStatus() == "waiting for legal") {
+            if(advert.getApprovalStatus().equals("waiting for legal")) {
                 pendingAdverts.add(advert);
             }
         }
@@ -78,7 +78,7 @@ public class LegalManager {
     public List<AdvertisingRelationship> getPendingAdvertisingRelationships() {
         List<AdvertisingRelationship> pendingAdvertisingRelationships = new ArrayList<>();
         for(AdvertisingRelationship relationship : advertisingRelationships) {
-            if(relationship.getApprovalStatus() == "waiting for legal") {
+            if(relationship.getApprovalStatus().equals("waiting for legal")) {
                 pendingAdvertisingRelationships.add(relationship);
             }
         }
