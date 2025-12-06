@@ -57,6 +57,10 @@ public class ProductRepository {
         return products.get(sku).reduceQuantity(quantity);
     }
 
+    public void increaseProductQuantity(String sku, int amount) {
+        products.get(sku).increaseQuantity(amount);
+    }
+
     public boolean containsProduct(String name) {
         return products.containsKey(name);
     }

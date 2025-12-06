@@ -9,6 +9,9 @@ import coms3620.fashion.departments.logistics.order.OrderLine;
 import coms3620.fashion.departments.logistics.shipment.Shipment;
 import coms3620.fashion.util.RandStringGenerator;
 
+/**
+ * @author Joseph Hennings
+ */
 public class LogisticsManager {
     private List<Order> orders;
     private List<Shipment> shipments;
@@ -30,11 +33,23 @@ public class LogisticsManager {
         return order;
     }
 
-    public void createShipment() {
+    public Shipment createShipment() {
+        for (Order order : orders)
+                order.updateStatus(Status.EXPEDITED);
         String id = randString.generateRandomString(8);
         Shipment shipment = new Shipment(new ArrayList<>(orders), id);
         shipments.add(shipment);
         orders.clear();
+
+        return shipment;
+    }
+
+    public void cancelShipment(Shipment shipment) {
+        for (Order order : shipment.getOrders()) {
+            order.updateStatus(Status.PENDING);
+            this.orders.add(order);
+        }
+        shipments.remove(shipment);
     }
 
     public boolean containsProduct(String name) {
@@ -43,6 +58,10 @@ public class LogisticsManager {
 
     public boolean reduceProductQuantity(String sku, int amount) {
         return productRepository.reduceProductQuantity(sku, amount);
+    }
+
+    public void increaseProductQuantity(String sku, int amount) {
+        productRepository.increaseProductQuantity(sku, amount);
     }
 
     public List<Order> getOrders() {

@@ -18,6 +18,7 @@ public class CreateAdvert implements Option {
 
     @Override
     public void run() {
+        advertManager.loadData();
         advertManager.createAdvert();
         advertManager.saveData();
     }

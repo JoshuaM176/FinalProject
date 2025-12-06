@@ -1,5 +1,8 @@
 package coms3620.fashion.departments.logistics;
 
+/**
+ * @author Joseph Hennings
+ */
 public class Product {
     private final String name;
     private final String sku;

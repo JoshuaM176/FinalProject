@@ -9,12 +9,14 @@ public class ManageAdverts extends Menu implements Option{
     public ManageAdverts() {
         AdvertManager advertManager = new AdvertManager();
         advertManager.loadData();
-        // Define Options
-        ViewAdverts viewAdverts = new ViewAdverts(advertManager);
-        CreateAdvert createAdvert = new CreateAdvert(advertManager);
         // Add Options
-        addOption(viewAdverts);
-        addOption(createAdvert);
+        addOption(new ViewAdverts(advertManager));
+        addOption(new CreateAdvert(advertManager));
+        addOption(new PublishAdvert(advertManager));
+        addOption(new CreateAdvertisingRelationship(advertManager));
+        addOption(new ViewAdvertisingRelationships(advertManager));
+        addOption(new ApproveAdvert(advertManager));
+        addOption(new ApproveAdvertisingRelationship(advertManager));
     }
 
     @Override

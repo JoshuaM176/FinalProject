@@ -1,40 +1,56 @@
 package coms3620.fashion.departments.finance_and_accounting;
 
-import java.util.UUID;
-
+/**
+ * Represents a single financial record (expense entry).
+ * For this iteration, recordType is used as the department name.
+ */
 public class Expense {
-    public final UUID id;
-    public final String dept;
-    public final String dateIso;     // e.g., 2025-11-05
-    public final int amountCents;    // store in cents to avoid FP issues
-    public final String vendor;
-    public final String category;
-    public final String description;
-    public boolean overBudget;
 
-    public Expense(String dept, String dateIso, int amountCents,
-                   String vendor, String category, String description) {
-        this.id = UUID.randomUUID();
-        this.dept = dept;
-        this.dateIso = dateIso;
-        this.amountCents = amountCents;
-        this.vendor = vendor;
-        this.category = category;
+    private String recordType;   // department name for now
+    private String description;
+    private int amount;
+    private String date;
+
+    /**
+     * Creates a new Expense record.
+     *
+     * @param recordType  type or department the expense belongs to
+     * @param description short description of the expense
+     * @param amount      amount spent (whole number)
+     * @param date        date string (e.g., YYYY-MM-DD)
+     */
+    public Expense(String recordType, String description, int amount, String date) {
+        this.recordType = recordType;
         this.description = description;
-        this.overBudget = false;
+        this.amount = amount;
+        this.date = date;
     }
 
-    public String toCsv() {
-        // entryId,timestamp(deprecated),dept,date,amountCents,vendor,category,description,overBudget
-        return id + "," + dept + "," + dateIso + "," + amountCents + "," +
-               escape(vendor) + "," + escape(category) + "," + escape(description) + "," + overBudget;
+    /**
+     * @return record type (currently used as department name)
+     */
+    public String getRecordType() {
+        return recordType;
     }
 
-    private static String escape(String s) {
-        if (s == null) return "";
-        if (s.contains(",") || s.contains("\"")) {
-            return "\"" + s.replace("\"", "\"\"") + "\"";
-        }
-        return s;
+    /**
+     * @return description of the expense
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @return amount of the expense
+     */
+    public int getAmount() {
+        return amount;
+    }
+
+    /**
+     * @return date of the expense
+     */
+    public String getDate() {
+        return date;
     }
 }

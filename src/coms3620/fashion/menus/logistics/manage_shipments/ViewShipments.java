@@ -6,6 +6,9 @@ import coms3620.fashion.departments.logistics.LogisticsManager;
 import coms3620.fashion.departments.logistics.shipment.Shipment;
 import coms3620.fashion.menus.Option;
 
+/**
+ * @author Joseph Hennings
+ */
 public class ViewShipments implements Option {
     private LogisticsManager logisticsManager;
 
@@ -35,5 +38,4 @@ public class ViewShipments implements Option {
             }
         }
     }
-    
 }

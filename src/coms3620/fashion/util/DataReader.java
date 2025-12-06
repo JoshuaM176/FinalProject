@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.UUID;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
@@ -37,11 +39,15 @@ public class DataReader implements AutoCloseable {
     }
 
     /**
-     * Reads in one line from the csv, returns an array of objects whose type is
-     * determine by the elements string, returns null at eof elementTypes string
-     * can contain i - integer u - UUID b - boolean s - string For example, iss
-     * would expect the csv to contain an integer followed by two strings
-     *
+     * Reads in one line from the csv, returns an array of objects whose type is determine by the elements string, returns null at eof
+     * elementTypes string can contain
+     * i - integer
+     * u - UUID
+     * d - LocalDate
+     * b - boolean
+     * s - string
+     * For example, iss would expect the csv to contain an integer followed by two strings
+     * 
      * @author Joshua Morningstar
      * @throws Exception
      */
@@ -66,6 +72,9 @@ public class DataReader implements AutoCloseable {
                     break;
                 case 'u':
                     objects[i] = UUID.fromString(elements[i]);
+                    break;
+                case 'd':
+                    objects[i] = LocalDate.parse(elements[i], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     break;
                 case 'b':
                     objects[i] = Boolean.parseBoolean(elements[i].trim());
@@ -105,7 +114,6 @@ public class DataReader implements AutoCloseable {
             }
         }
         strings.add(string);
-
         return strings.toArray(new String[0]);
     }
 

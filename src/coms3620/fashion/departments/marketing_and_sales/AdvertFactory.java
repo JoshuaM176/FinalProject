@@ -3,30 +3,21 @@ package coms3620.fashion.departments.marketing_and_sales;
 import coms3620.fashion.departments.marketing_and_sales.adverts.*;
 import coms3620.fashion.util.InputValidation;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.security.DrbgParameters.Instantiation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.function.Function;
 import java.util.Objects;
 
 
 public class AdvertFactory {
 
-    private Map<String,Supplier<Advert>> advertFromInputMap = new HashMap<String,Supplier<Advert>>();
-    private Map<String,Function<Object[],Advert>> advertFromFileMap = new HashMap<String,Function<Object[],Advert>>();
+    private Map<String,Supplier<Advert>> advertTypeMap = new HashMap<String,Supplier<Advert>>();
 
     public AdvertFactory(){
         //Define constructors for user input
-        advertFromInputMap.put("Magazine Advert", ()->new MagazineAdvert());
-        advertFromInputMap.put("Radio Advert", ()->new RadioAdvert());
-        advertFromInputMap.put("TV Commercial", ()->new TVCommercial());
-        //Define constructors for reading from file
-        advertFromFileMap.put("Magazine", (Object[] object)->new MagazineAdvert(object));
-        advertFromFileMap.put("Radio", (Object[] object)->new RadioAdvert(object));
-        advertFromFileMap.put("TV", (Object[] object)->new TVCommercial(object));
+        advertTypeMap.put("Magazine Advert", ()->new MagazineAdvert());
+        advertTypeMap.put("Radio Advert", ()->new RadioAdvert());
+        advertTypeMap.put("TV Advert", ()->new TVAdvert());
     }
 
     public <T extends Advert> void addOption(Class<T> advert, String displayName, String type){
@@ -35,14 +26,18 @@ public class AdvertFactory {
 
     public Advert createAdvertFromInput() {
         System.out.println("What type of advertisement are you creating?");
-        Supplier<Advert> advertConstructor = selectOption(advertFromInputMap);
+        Supplier<Advert> advertConstructor = selectOption(advertTypeMap);
         if(Objects.isNull(advertConstructor)) {return null;}
-        return advertConstructor.get();
+        Advert advert = advertConstructor.get();
+        advert.createFromInput();
+        return advert;
     }
 
     public Advert createAdvertFromObject(Object[] object) {
-        Function<Object[],Advert> function = advertFromFileMap.get(object[0]);
-        Advert advert = function.apply(object);
+        Supplier<Advert> advertConstructor = advertTypeMap.get(object[0]);
+        if(Objects.isNull(advertConstructor)) {return null;}
+        Advert advert = advertConstructor.get();
+        advert.loadFromFile(object);
         return advert;
     }
 
