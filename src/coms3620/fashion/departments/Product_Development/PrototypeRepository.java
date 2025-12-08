@@ -26,7 +26,7 @@ public class PrototypeRepository {
         try (DataReader dr = new DataReader(filePath)) {
             dr.getRow("ssssss");        // skip header
             Object[] row;
-            while ((row = dr.getRow("ussb")) != null) {
+            while ((row = dr.getRow("ussbss")) != null) {
                 UUID id = (UUID) row[0];
                 String concept = (String) row[1];
                 String materials = (String) row[2];
