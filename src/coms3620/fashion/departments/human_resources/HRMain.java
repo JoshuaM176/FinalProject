@@ -17,7 +17,8 @@ public class HRMain {
     System.out.println("3. Add Employee");
     System.out.println("4. Fire Employee");
     System.out.println("5. Make a change to existing employee");
-    System.out.println("6. Save & Exit");
+    System.out.println("6. Add or View employee Review");
+    System.out.println("7. Save & Exit");
     System.out.print("Choose option: ");
     int choice = sc.nextInt();
     sc.nextLine(); // clear newline
@@ -130,6 +131,26 @@ public class HRMain {
 
         }
         case 6 -> {
+            System.out.print("Would you like to add or view employee review: ");
+            System.out.print("1. Add employee Review: ");
+            System.out.print("2. View employee Review: ");
+            int choice3 = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice3) {
+                case 1 -> {
+                    System.out.print("Enter employee ID: ");
+                    int id = sc.nextInt(); sc.nextLine();
+                }
+                case 2 -> {
+                    System.out.print("Enter employee ID: ");
+                    int id = sc.nextInt(); sc.nextLine();
+                }
+            }
+
+
+        }
+        case 7 -> {
             sm.saveEmployees();
             System.out.println("Exiting HR module...");
             return;
