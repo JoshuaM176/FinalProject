@@ -31,7 +31,7 @@ public class ManageEmployees {
 
         System.out.println("\n--- Employee List ---");
         for (Employee e : list) {
-            System.out.println(e.getId() + " - " + e.getName() +  " - " + e.getSalary());
+            System.out.println(e.getId() + " - " + e.getName());
         }
     }
 
@@ -104,7 +104,39 @@ public class ManageEmployees {
         saveEmployees();
     }
 
+    public void changeLocation(int id, String location) {
+        Employee target = employeeRepo.findEmployeeById(id);
 
+        if (target == null) {
+            System.out.println("Employee with ID " + id + " doesn’t exist.");
+            return;
+        }
+
+        target.setLocation(location);
+        System.out.println(target.getName() + " location has been changed to " + location);
+        saveEmployees();
+    }
+
+    public void getEmployee(int id) {
+
+        Employee target = employeeRepo.findEmployeeById(id);
+        List<Employee> list = employeeRepo.getEmployees();
+
+        if (target == null) {
+            System.out.println("Employee with ID " + id + " doesn’t exist.");
+            return;
+        }
+
+        for (Employee e : list) {
+            if (e.getId() == id) {
+                System.out.println(e.getId() + " - " + e.getName() + " - " + e.getSalary() + " - " + e.getLocation() + " - " + e.getRoleLevel());
+            }
+        }
+    }
+
+    public Employee getEmployeeForReview(int id) {
+        return employeeRepo.findEmployeeById(id);
+    }
 
 
 }
