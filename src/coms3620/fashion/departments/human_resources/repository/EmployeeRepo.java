@@ -20,12 +20,13 @@ public class EmployeeRepo {
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
 
-                int id = Integer.parseInt(data[0]);
+int id = Integer.parseInt(data[0]);
                 String name = data[1].trim();
                 Employee.RoleLevel level = Employee.RoleLevel.valueOf(data[2].trim().toUpperCase());
                 String location = data[3].trim();
                 String title = data[4].trim();
                 int salary = Integer.parseInt(data[5].trim());
+                
 
                 employees.add(new Employee(id, name, level, location, title, salary));
             }

@@ -61,8 +61,12 @@ public class ProductRepository {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filepath, false))) {
             pw.println("name, sku, size, price, quantity");
             for (Product product : products.values()) {
-                pw.println(product.getName() + ", " + product. getSKU() + ", " + product.getSize()
-                     + ", " + product.getPrice() + ", " + product.getQuantity());
+                pw.printf("%s, %s, %s, %.2f, %d%n",
+                    product.getName(),
+                    product.getSKU(),
+                    product.getSize(),
+                    product.getPrice(),
+                    product.getQuantity());
             }
         } catch (IOException e) {
             System.out.println("Failed to write to products.csv.");
