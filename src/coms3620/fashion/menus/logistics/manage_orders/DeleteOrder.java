@@ -43,6 +43,7 @@ public class DeleteOrder implements Option {
             for (OrderLine orderLine : orderLines)            
                 orderLine.refundQuantity();
             
+            logisticsManager.saveProducts();
             orders.remove(index - 1);
             System.out.println("Order no. " + index + " was successfully deleted.");
         }

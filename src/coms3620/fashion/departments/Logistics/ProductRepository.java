@@ -1,6 +1,7 @@
 package coms3620.fashion.departments.logistics;
 
 import java.util.Map;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,9 +14,11 @@ import java.util.List;
 
 public class ProductRepository {
     private Map<String, Product> products = new LinkedHashMap<>();
+    private String filepath;
 
     public ProductRepository(String filepath) {
         loadProducts(filepath);
+        this.filepath = filepath;
     }
 
     private void loadProducts(String filepath) {
@@ -53,12 +56,26 @@ public class ProductRepository {
         }
     }
 
+    /* Persist to CSV */
+    public void save() {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(filepath, false))) {
+            pw.println("name, sku, size, price, quantity");
+            for (Product product : products.values()) {
+                pw.println(product.getName() + ", " + product. getSKU() + ", " + product.getSize()
+                     + ", " + product.getPrice() + ", " + product.getQuantity());
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to write to products.csv.");
+        }
+    }
+
     public boolean reduceProductQuantity(String sku, int quantity) {
         return products.get(sku).reduceQuantity(quantity);
     }
 
     public void increaseProductQuantity(String sku, int amount) {
         products.get(sku).increaseQuantity(amount);
+        save();
     }
 
     public boolean containsProduct(String name) {

@@ -29,6 +29,7 @@ public class LogisticsManager {
         Order order = new Order(randString.generateRandomString(8), ols);
         order.finalizeOrder();
         orders.add(order);
+        saveProducts();
 
         return order;
     }
@@ -50,6 +51,10 @@ public class LogisticsManager {
             this.orders.add(order);
         }
         shipments.remove(shipment);
+    }
+
+    public void saveProducts() {
+        productRepository.save();
     }
 
     public boolean containsProduct(String name) {
