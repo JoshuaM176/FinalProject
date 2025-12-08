@@ -38,6 +38,7 @@ public enum RoleLevel {
     public void setSalary(int salary) { this.salary = salary; }
     public RoleLevel getRoleLevel(){ return roleLevel; }
     public void setRoleLevel(RoleLevel roleLevel){ this.roleLevel = roleLevel; }
+    public void setLocation(String location) { this.location = location; }
 
     public void fire(String reason) {
         System.out.println("Employee " + name + " has been fired for: " + reason);

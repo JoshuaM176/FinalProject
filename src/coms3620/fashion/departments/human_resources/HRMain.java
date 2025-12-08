@@ -13,10 +13,11 @@ public class HRMain {
         while (true) {
     System.out.println("\n===== HR MENU =====");
     System.out.println("1. View Employees");
-    System.out.println("2. Add Employee");
-    System.out.println("3. Fire Employee");
-    System.out.println("4. Make a change to existing employee");
-    System.out.println("5. Save & Exit");
+    System.out.println("2. Find Employee by Id");
+    System.out.println("3. Add Employee");
+    System.out.println("4. Fire Employee");
+    System.out.println("5. Make a change to existing employee");
+    System.out.println("6. Save & Exit");
     System.out.print("Choose option: ");
     int choice = sc.nextInt();
     sc.nextLine(); // clear newline
@@ -24,6 +25,10 @@ public class HRMain {
     switch (choice) {
         case 1 -> sm.showEmployees();
         case 2 -> {
+            System.out.print("Enter Employee Id: ");
+            sm.getEmployee(sc.nextInt());
+        }
+        case 3 -> {
             System.out.print("Enter new employee ID: ");
             int id = sc.nextInt(); sc.nextLine();
             System.out.print("Enter new employee name: ");
@@ -56,14 +61,14 @@ public class HRMain {
 
             sm.addEmployee(id, name, newLevel, location, title, salary);
         }
-        case 3 -> {
+        case 4 -> {
             System.out.print("Enter employee ID to fire: ");
             int id = sc.nextInt(); sc.nextLine();
             System.out.print("Enter reason for termination: ");
             String reason = sc.nextLine();
             sm.fireEmployee(id, reason);
         }
-        case 4 -> {
+        case 5 -> {
             System.out.println("Enter employee ID to make a change to existing employee: ");
             int id = sc.nextInt(); sc.nextLine();
 
@@ -111,6 +116,12 @@ public class HRMain {
 
 
                     case 3:
+                        System.out.println("Enter the employee's new location: ");
+                        String location = sc.nextLine();
+
+                        sm.changeLocation(id, location);
+                        break;
+
 
 
                 }
@@ -118,7 +129,7 @@ public class HRMain {
 
 
         }
-        case 5 -> {
+        case 6 -> {
             sm.saveEmployees();
             System.out.println("Exiting HR module...");
             return;
