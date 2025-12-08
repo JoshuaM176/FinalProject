@@ -202,6 +202,7 @@ public class EditOrder implements Option {
 
             Order order = orders.get(choice - 1);
             editOrder(order);
+            logisticsManager.saveProducts();
         }
     }
     
