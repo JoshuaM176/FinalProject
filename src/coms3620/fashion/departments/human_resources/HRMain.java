@@ -93,35 +93,54 @@ public class HRMain {
                         System.out.println("2. Senior");
                         System.out.println("3. Manager");
 
-                        int chosenLevel = sc.nextInt();
-                        sc.nextLine(); // clear buffer
 
-                        Employee.RoleLevel newLevel;
+                        int chosenLevel;
 
-                        switch (chosenLevel) {
-                            case 1 -> newLevel = Employee.RoleLevel.JUNIOR;
-                            case 2 -> newLevel = Employee.RoleLevel.SENIOR;
-                            case 3 -> newLevel = Employee.RoleLevel.MANAGER;
-                            default -> {
-                                System.out.println("Invalid choice — defaulting to JUNIOR.");
-                                newLevel = Employee.RoleLevel.JUNIOR;
+                        // Input validation loop for integers **between 1 and 3**
+                        while (true) {
+                            System.out.print("Choose option (1–3): ");
+
+                            if (sc.hasNextInt()) {
+                                chosenLevel = sc.nextInt();
+                                sc.nextLine(); // clear buffer
+
+                                if (chosenLevel >= 1 && chosenLevel <= 3) {
+                                    break;  // valid choice → exit loop
+                                } else {
+                                    System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                                }
+
+                            } else {
+                                System.out.println("Invalid input. Please enter a number (1–3).");
+                                sc.next(); // clear invalid token
                             }
                         }
+
+                        // Convert number → enum
+                        Employee.RoleLevel newLevel = switch (chosenLevel) {
+                            case 1 -> Employee.RoleLevel.JUNIOR;
+                            case 2 -> Employee.RoleLevel.SENIOR;
+                            case 3 -> Employee.RoleLevel.MANAGER;
+                            default -> Employee.RoleLevel.JUNIOR; // never reached but required
+                        };
+
                         sm.changeRoleLevel(id, newLevel);
-                        break;
-
-                    case 2:
-                        System.out.print("Enter the employee's new salary: ");
-                        int salary = sc.nextInt();
-                        sc.nextLine();
-
-                        sm.changeSalary(id, salary);
                         break;
 
 
                     case 3:
-                        System.out.println("Enter the employee's new location: ");
-                        String location = sc.nextLine();
+                        String location;
+
+                        while (true) {
+                            System.out.print("Enter the employee's new location: ");
+                            location = sc.nextLine().trim();
+
+                            if (!location.isEmpty()) {
+                                break;  // valid string
+                            } else {
+                                System.out.println("Location cannot be empty. Please enter a valid location.");
+                            }
+                        }
 
                         sm.changeLocation(id, location);
                         break;
