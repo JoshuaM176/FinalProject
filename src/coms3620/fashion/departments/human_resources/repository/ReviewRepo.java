@@ -42,4 +42,19 @@ public class ReviewRepo {
         }
     }
 
+    public List<Review> getAllReviews() {
+        return review;
+    }
+
+    public Review getReview(int reviewId) {
+
+        for (Review r : review) {
+            if (reviewId == r.getReviewId()) {
+                return r;
+            }
+        }
+
+        return null;
+    }
+
 }

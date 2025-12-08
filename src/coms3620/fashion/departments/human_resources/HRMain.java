@@ -1,6 +1,7 @@
 package coms3620.fashion.departments.human_resources;
 import coms3620.fashion.departments.human_resources.service.ManageEmployees;
 import coms3620.fashion.departments.human_resources.repository.EmployeeRepo;
+import coms3620.fashion.departments.human_resources.service.ManageReviews;
 
 import java.util.Scanner;
 
@@ -8,6 +9,8 @@ public class HRMain {
     public static void runHR() {
         ManageEmployees sm = new ManageEmployees();
         sm.loadEmployees();
+        ManageReviews sm2 = new ManageReviews();  // 👈 create once
+        sm2.loadReviews();
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -131,20 +134,26 @@ public class HRMain {
 
         }
         case 6 -> {
-            System.out.print("Would you like to add or view employee review: ");
-            System.out.print("1. Add employee Review: ");
-            System.out.print("2. View employee Review: ");
+            System.out.println("Would you like to add or view employee review: ");
+            System.out.println("1. Add employee Review: ");
+            System.out.println("2. View employee Review: ");
             int choice3 = sc.nextInt();
             sc.nextLine();
 
             switch (choice3) {
                 case 1 -> {
                     System.out.print("Enter employee ID: ");
-                    int id = sc.nextInt(); sc.nextLine();
+                    int id = sc.nextInt();
+                    sc.nextLine();
+
+
                 }
                 case 2 -> {
                     System.out.print("Enter employee ID: ");
-                    int id = sc.nextInt(); sc.nextLine();
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    sm2.printReviewsByEmployeeId(id);
+                    break;
                 }
             }
 

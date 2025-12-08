@@ -2,26 +2,26 @@ package coms3620.fashion.departments.human_resources;
 
 public class Review {
 
-    int id;
-    int employeeID;
+    int reviewId;
+    int revieweeId;
     int reviewerID;
     String comment;
     String date;
 
-    public Review(int id, int employeeID, int reviewerID, String comment, String date){
+    public Review(int reviewId, int revieweeId, int reviewerID, String comment, String date){
 
-    this.id = id;
-    this.employeeID = employeeID;
+    this.reviewId = reviewId;
+    this.revieweeId = revieweeId;
     this.reviewerID = reviewerID;
     this.comment = comment;
     this.date = date;
 
     }
-    public int getId(){
-        return id;
+    public int getReviewId() {   // capital R
+        return reviewId;
     }
-    public int getEmployeeID(){
-        return employeeID;
+    public int getRevieweeId() {
+        return revieweeId;
     }
     public int getReviewerID(){
         return reviewerID;
