@@ -9,7 +9,6 @@ import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DesignContest implements Option {
@@ -28,10 +27,7 @@ public class DesignContest implements Option {
     @Override
     public void run() {
         boolean contestOpen = isContestOpen();
-        List<Prototype> entries = repo.findAll()
-                .stream()
-                .filter(p -> p.getId().toString().startsWith("COMP-"))
-                .collect(Collectors.toList());
+        List<Prototype> entries = repo.findAll(); // remove .stream() filter
 
         System.out.println("====  INTERNAL DESIGN CONTEST  ====");
         System.out.println("Status: " + (contestOpen ? "OPEN" : "CLOSED"));
@@ -178,7 +174,7 @@ public class DesignContest implements Option {
             return 0;
         }
         try (Stream<String> lines = Files.lines(log)) {
-            return (int) lines.filter(l -> l.split(",")[1].equals(p.getId())).count();
+            return (int) lines.filter(l -> UUID.fromString(l.split(",")[1]).equals(p.getId())).count();
         } catch (IOException e) {
             return 0;
         }
@@ -192,14 +188,6 @@ public class DesignContest implements Option {
     }
 
     private void printTrophy(String concept, int votes) {
-        System.out.println(
-                """
-                 ___________\s
-                |           |\s
-                |   WINNER  |\s
-                |           |\s
-                |  """ + concept + "  |\n"
-                + "| " + votes + " votes  |\n"
-                + "|___________|");
+        System.out.println("WINNER:" + concept + " with " + votes + " votes!");
     }
 }
