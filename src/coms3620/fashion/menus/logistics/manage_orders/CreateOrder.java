@@ -34,7 +34,7 @@ public class CreateOrder implements Option {
         boolean keepAdding = true;
 
         do {
-            System.out.print("Enter keyword(s) -- > ");
+            System.out.print("Enter keyword(s) --> ");
             String keyword = Stdin.nextLine();
             System.out.println();
 
