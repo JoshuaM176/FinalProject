@@ -10,6 +10,7 @@ public class ManagePrototypes extends Menu implements Option {
         // 1. create the repository and controller once
         PrototypeRepository repo = new PrototypeRepository("data/product_development/prototypes.csv");
         PrototypeController controller = new PrototypeController(new MaterialManager(), repo);
+        PrototypeCostEstimator estimator = new PrototypeCostEstimator("data/product_development/material_costs.csv", 25.0);
 
         // 2. pass them to the menu options that need them
         addOption(new CreatePrototype(controller));
@@ -18,6 +19,8 @@ public class ManagePrototypes extends Menu implements Option {
         addOption(new FilterByMaterial(repo));
         addOption(new DeletePrototype(repo));
         addOption(new DesignContest(repo));
+        addOption(new UpdatePrototypeMaterials(repo));
+        addOption(new EstimatePrototypeCost(repo, estimator));
     }
 
     @Override
