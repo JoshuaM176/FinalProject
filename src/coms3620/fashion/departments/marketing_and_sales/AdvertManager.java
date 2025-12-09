@@ -132,6 +132,10 @@ public class AdvertManager {
         }
     }
 
+    public void deleteAdvert() {
+
+    }
+
     public void viewPublishedAdverts() {
         System.out.println("type, name, quarterlyCost, id, startDate, endDate, approvalStatus, advertCompany");
         for(PublishedAdvert advert : publishedAdverts) {
@@ -140,6 +144,14 @@ public class AdvertManager {
                 System.out.println(object + ", ");
             }
         }
+    }
+
+    public void cancelPublishedAdvert() {
+    String[] advertNames = new String[publishedAdverts.size()];
+        for(int i = 0; i < adverts.size(); i++) {
+            advertNames[i] = publishedAdverts.get(i).getName();
+        }
+        publishedAdverts.remove(InputValidation.OptionsInput(advertNames));
     }
 
     public void createAdvertisingRelationship() {
@@ -163,7 +175,7 @@ public class AdvertManager {
         advertToApprove.run();
     }
 
-    public void manageAdvertisingRelationships() {
+    public void cancelAdvertisingRelationships() {
         // TODO
     }
 

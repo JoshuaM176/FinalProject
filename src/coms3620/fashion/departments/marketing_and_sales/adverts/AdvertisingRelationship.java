@@ -56,7 +56,7 @@ public class AdvertisingRelationship implements Approvable{
         }
         if(response == 1) {
             System.out.println("A contract file is required.");
-            setApprovalStatus("denied");
+            setApprovalStatus("waiting for legal");
         }
     }
 
