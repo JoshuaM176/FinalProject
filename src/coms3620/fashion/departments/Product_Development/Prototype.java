@@ -47,14 +47,6 @@ public class Prototype {
         };
     }
 
-    public void setLastActor(String actor) {
-        this.lastActor = actor;
-    }
-
-    public void setLastNote(String note) {
-        this.lastNote = note;
-    }
-
     @Override
     public String toString() {
         return String.format(
@@ -63,6 +55,15 @@ public class Prototype {
                 lastActor == null ? "" : lastActor,
                 lastNote == null ? "" : lastNote
         );
+    }
+
+    // Setters
+    public void setLastActor(String actor) {
+        this.lastActor = actor;
+    }
+
+    public void setLastNote(String note) {
+        this.lastNote = note;
     }
 
     // Getters
