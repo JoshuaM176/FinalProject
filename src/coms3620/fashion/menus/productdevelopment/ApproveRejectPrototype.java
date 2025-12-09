@@ -39,6 +39,7 @@ public class ApproveRejectPrototype implements Option {
         }
 
         // 2.  pick prototype
+        System.err.println("Select prototype to approve/reject:");
         int idx = InputValidation.IntegerRangeInput(1, all.size()) - 1;
         Prototype chosen = all.get(idx);
 
