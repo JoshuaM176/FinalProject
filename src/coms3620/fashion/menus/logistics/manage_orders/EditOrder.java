@@ -39,12 +39,12 @@ public class EditOrder implements Option {
             double lineTotal = qty * price;
 
             System.out.printf("%-4d %-35s %-20s %-10d $%-11.2f $%-13.2f\n",
-                    index++,
-                    p.getName(),
-                    p.getSKU(),
-                    qty,
-                    price,
-                    lineTotal
+                index++,
+                p.getName(),
+                p.getSKU(),
+                qty,
+                price,
+                lineTotal
             );
         }
 
@@ -202,6 +202,7 @@ public class EditOrder implements Option {
 
             Order order = orders.get(choice - 1);
             editOrder(order);
+            logisticsManager.saveProducts();
         }
     }
     

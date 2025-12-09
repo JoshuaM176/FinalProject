@@ -1,6 +1,5 @@
 *iml
 *xml
-data
 # Ignore IntelliJ project files
 .idea/
 *.iml

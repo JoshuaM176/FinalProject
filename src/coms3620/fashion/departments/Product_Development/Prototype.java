@@ -8,6 +8,8 @@ public class Prototype {
     private final String conceptName;
     private final String materials;
     private boolean approved;
+    private String lastActor;
+    private String lastNote;
 
     public Prototype(String conceptName, String materials) {
         if (conceptName == null || conceptName.isBlank()) {
@@ -38,15 +40,30 @@ public class Prototype {
     }
 
     public Object[] toRow() {
-        return new Object[]{id, conceptName, materials, approved};
+        return new Object[]{
+            id, conceptName, materials, approved,
+            lastActor == null ? "" : lastActor,
+            lastNote == null ? "" : lastNote
+        };
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Prototype{id=%s, concept='%s', materials='%s', approved=%s}",
-                id, conceptName, materials, approved
+                "Prototype{id=%s, concept='%s', materials='%s', approved=%s, lastActor='%s', lastNote='%s'}",
+                id, conceptName, materials, approved,
+                lastActor == null ? "" : lastActor,
+                lastNote == null ? "" : lastNote
         );
+    }
+
+    // Setters
+    public void setLastActor(String actor) {
+        this.lastActor = actor;
+    }
+
+    public void setLastNote(String note) {
+        this.lastNote = note;
     }
 
     // Getters
@@ -64,5 +81,13 @@ public class Prototype {
 
     public boolean isApproved() {
         return approved;
+    }
+
+    public String getLastActor() {
+        return lastActor;
+    }
+
+    public String getLastNote() {
+        return lastNote;
     }
 }

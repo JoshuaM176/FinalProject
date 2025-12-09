@@ -1,3 +1,7 @@
+/**
+ * @author Alexander Tran
+ */
+
 package coms3620.fashion.menus.productdevelopment;
 
 import java.util.*;
