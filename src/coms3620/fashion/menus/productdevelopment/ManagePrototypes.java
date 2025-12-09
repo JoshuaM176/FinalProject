@@ -17,6 +17,7 @@ public class ManagePrototypes extends Menu implements Option {
         addOption(new ApproveRejectPrototype(repo));
         addOption(new FilterByMaterial(repo));
         addOption(new DeletePrototype(repo));
+        addOption(new DesignContest(repo));
     }
 
     @Override
