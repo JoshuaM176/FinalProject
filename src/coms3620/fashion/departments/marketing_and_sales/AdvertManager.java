@@ -133,7 +133,12 @@ public class AdvertManager {
     }
 
     public void deleteAdvert() {
-
+       String[] advertNames = new String[adverts.size()];
+       for(int i = 0; i < publishedAdverts.size(); i++) {
+        advertNames[i] = adverts.get(i).getName();
+       } 
+       Advert advertToDelete = adverts.get(InputValidation.OptionsInput(advertNames));
+       // TODO
     }
 
     public void viewPublishedAdverts() {
