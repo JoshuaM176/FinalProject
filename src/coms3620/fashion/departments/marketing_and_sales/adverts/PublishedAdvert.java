@@ -60,6 +60,10 @@ public class PublishedAdvert implements Approvable{
         approvalStatus = status;
     };
 
+    public UUID getId() {
+        return id;
+    }
+
     public void draftLegal() {
         System.out.println("Is there a contract for this advertising relationship?");
         int response = InputValidation.OptionsInput(new String[]{"Yes", "No"});

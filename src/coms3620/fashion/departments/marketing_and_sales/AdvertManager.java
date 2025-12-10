@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 
 public class AdvertManager {
@@ -133,11 +134,33 @@ public class AdvertManager {
     }
 
     public void deleteAdvert() {
-       String[] advertNames = new String[adverts.size()];
-       for(int i = 0; i < publishedAdverts.size(); i++) {
+    
+        String[] advertNames = new String[adverts.size()];
+        for(int i = 0; i < adverts.size(); i++) {
         advertNames[i] = adverts.get(i).getName();
-       } 
-       Advert advertToDelete = adverts.get(InputValidation.OptionsInput(advertNames));
+        } 
+        Advert advertToDelete = adverts.get(InputValidation.OptionsInput(advertNames));
+        UUID advertId = advertToDelete.getId();
+        ArrayList<PublishedAdvert> associatedPublishedAdverts = new ArrayList<>();
+        for(PublishedAdvert publishedAdvert : publishedAdverts) {
+            if(publishedAdvert.getId().equals(advertId)) {
+                associatedPublishedAdverts.add(publishedAdvert);
+            } 
+       }
+        if(associatedPublishedAdverts.size() > 0) {
+            System.out.println("This advertisement has associated published adverts. Are you sure you want to delete it, and cancel all associated published adverts?");
+            int choice = InputValidation.OptionsInput(new String[]{"No","Yes"});
+            if(choice == 0) {
+                for(PublishedAdvert publishedAdvert : associatedPublishedAdverts) {
+                    publishedAdverts.remove(publishedAdvert);
+                }
+            }
+            else {
+                System.out.println("Deletion cancelled");
+                return;
+            }
+            adverts.remove(advertToDelete);
+       }
        // TODO
     }
 

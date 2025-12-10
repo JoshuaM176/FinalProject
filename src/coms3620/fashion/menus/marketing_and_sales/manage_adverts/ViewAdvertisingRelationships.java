@@ -17,6 +17,7 @@ public class ViewAdvertisingRelationships implements Option {
 
     @Override
     public void run() {
+        advertManager.loadData();
         advertManager.viewAdvertisingRelationships();
     }
     

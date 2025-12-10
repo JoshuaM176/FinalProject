@@ -18,6 +18,7 @@ public class ViewAdverts implements Option{
 
     @Override
     public void run() {
+        advertManager.loadData();
         advertManager.viewAdverts();
     }
     
