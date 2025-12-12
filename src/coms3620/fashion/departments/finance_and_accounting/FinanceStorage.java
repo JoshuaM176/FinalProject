@@ -11,10 +11,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Simple file-based storage for the Finance & Accounting department.
- * Stores and retrieves plain text lines from a single file.
- */
+/** Stores and retrieves plain text lines from a single file */
 public class FinanceStorage implements Storage {
 
     private final Path filePath;

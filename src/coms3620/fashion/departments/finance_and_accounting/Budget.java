@@ -54,6 +54,20 @@ public class Budget {
     }
 
     /**
+     * Sets spentToDate directly.
+     * This is used for rollback if saving to file fails.
+     *
+     * @param spentToDate new spentToDate amount
+     */
+    public void setSpentToDate(int spentToDate) {
+        if (spentToDate < 0) {
+            this.spentToDate = 0;
+        } else {
+            this.spentToDate = spentToDate;
+        }
+    }
+
+    /**
      * Adds an expense to the amount spent so far.
      *
      * @param amount amount to add to spentToDate
