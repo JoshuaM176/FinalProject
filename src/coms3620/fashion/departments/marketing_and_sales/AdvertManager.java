@@ -161,7 +161,6 @@ public class AdvertManager {
             }
        }
        adverts.remove(advertToDelete);
-       // TODO
     }
 
     public void viewPublishedAdverts() {

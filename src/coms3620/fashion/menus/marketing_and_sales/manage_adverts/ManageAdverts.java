@@ -19,6 +19,7 @@ public class ManageAdverts extends Menu implements Option{
         addOption(new ApproveAdvert(advertManager));
         addOption(new ApproveAdvertisingRelationship(advertManager));
         addOption(new DeleteAdvert(advertManager));
+        addOption(new CancelPublishedAdvert(advertManager));
     }
 
     @Override
