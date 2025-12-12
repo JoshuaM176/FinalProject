@@ -150,7 +150,7 @@ public class AdvertManager {
         if(associatedPublishedAdverts.size() > 0) {
             System.out.println("This advertisement has associated published adverts. Are you sure you want to delete it, and cancel all associated published adverts?");
             int choice = InputValidation.OptionsInput(new String[]{"No","Yes"});
-            if(choice == 0) {
+            if(choice == 1) {
                 for(PublishedAdvert publishedAdvert : associatedPublishedAdverts) {
                     publishedAdverts.remove(publishedAdvert);
                 }
@@ -159,8 +159,8 @@ public class AdvertManager {
                 System.out.println("Deletion cancelled");
                 return;
             }
-            adverts.remove(advertToDelete);
        }
+       adverts.remove(advertToDelete);
        // TODO
     }
 
@@ -168,9 +168,11 @@ public class AdvertManager {
         System.out.println("type, name, quarterlyCost, id, startDate, endDate, approvalStatus, advertCompany");
         for(PublishedAdvert advert : publishedAdverts) {
             Object[] data = advert.getRowData();
+            String string = "";
             for(Object object : data) {
-                System.out.println(object + ", ");
+                string += (object.toString() + ", ");
             }
+            System.out.println(string);
         }
     }
 
