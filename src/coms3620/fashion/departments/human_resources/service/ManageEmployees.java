@@ -138,5 +138,9 @@ public class ManageEmployees {
         return employeeRepo.findEmployeeById(id);
     }
 
+    public void noIDMessage() {
+        System.out.println("No reviews found for employee ID");
+    }
+
 
 }

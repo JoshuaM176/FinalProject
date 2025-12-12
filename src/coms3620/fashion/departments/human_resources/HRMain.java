@@ -20,7 +20,7 @@ public class HRMain {
     System.out.println("3. Add Employee");
     System.out.println("4. Fire Employee");
     System.out.println("5. Make a change to existing employee");
-    System.out.println("6. Add or View employee Review");
+    System.out.println("6. Go to Reviews");
     System.out.println("7. Save & Exit");
     System.out.print("Choose option: ");
     int choice = sc.nextInt();
@@ -153,17 +153,59 @@ public class HRMain {
 
         }
         case 6 -> {
-            System.out.println("Would you like to add or view employee review: ");
-            System.out.println("1. Add employee Review: ");
-            System.out.println("2. View employee Review: ");
+            System.out.println("What would like to do with the Reviews?");
+            System.out.println("1. Add employee Review ");
+            System.out.println("2. View Reviews left for an Employee ");
+            System.out.println("3. View Reviews that an employee has made ");
+            System.out.println("4. Back ");
+            System.out.print("Choose Option: ");
             int choice3 = sc.nextInt();
             sc.nextLine();
 
             switch (choice3) {
                 case 1 -> {
-                    System.out.print("Enter employee ID: ");
-                    int id = sc.nextInt();
-                    sc.nextLine();
+
+                    int id;
+                    while (true) {
+                        System.out.print("Enter your employee ID: ");
+                        id = sc.nextInt();
+                        sc.nextLine();
+
+                        if (sm.employeeExists(id)) {
+                            break;  // valid → exit loop
+                        }
+
+                        sm.noIDMessage();  // invalid → show error and repeat
+                    }
+
+
+                    int id2;
+                    while (true) {
+                        System.out.print("Enter the employee's ID: ");
+                        id2 = sc.nextInt();
+                        sc.nextLine();
+
+                        if (sm.employeeExists(id2)) {
+                            break;
+                        }
+
+                        sm.noIDMessage();
+                    }
+
+                    String review;
+                    while (true) {
+                        System.out.print("Enter the review: ");
+                        review = sc.nextLine();
+
+                        if (!review.trim().isEmpty()) {  // valid input
+                            break;
+                        }
+
+                        System.out.println("Review cannot be empty. Please enter a valid comment.");
+                    }
+                    sm2.addReview(id, id2, review);
+                    break;
+
 
 
                 }
@@ -171,7 +213,52 @@ public class HRMain {
                     System.out.print("Enter employee ID: ");
                     int id = sc.nextInt();
                     sc.nextLine();
-                    sm2.printReviewsByEmployeeId(id);
+                    sm2.printReviewsByEmployeeId(id, sm);
+                    break;
+                }
+
+                case 3 -> {
+
+                    int id;
+                    while (true) {
+                        System.out.print("Enter your employee ID: ");
+                        id = sc.nextInt();
+                        sc.nextLine();
+
+                        if (sm.employeeExists(id)) {
+                            break;  // valid → exit loop
+                        }
+
+                        sm.noIDMessage();  // invalid → show error and repeat
+                    }
+
+                    // Show all reviews they left, with dates + names
+                    sm2.printReviewsMadeByEmployeeID(id, sm);
+
+                    // Ask if they want to delete one
+                    System.out.print("Would you like to delete one of these reviews? (y/n): ");
+                    String answer = sc.nextLine().trim().toLowerCase();
+
+                    if (answer.equals("y")) {
+                        System.out.print("Enter the review number (ID) to delete: ");
+                        int reviewIdToDelete = sc.nextInt();
+                        sc.nextLine();
+
+                        boolean deleted = sm2.deleteReviewByIdForReviewer(id, reviewIdToDelete);
+
+                        if (deleted) {
+                            System.out.println("Review #" + reviewIdToDelete + " has been deleted.");
+                        } else {
+                            System.out.println("No review with that ID was found for your account.");
+                        }
+                    }
+
+                    break;
+                }
+
+
+
+                case 4 -> {
                     break;
                 }
             }

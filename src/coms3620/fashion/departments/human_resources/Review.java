@@ -33,5 +33,24 @@ public class Review {
         return date;
     }
 
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
+    }
+
+    public void setRevieweeId(int revieweeId) {
+        this.revieweeId = revieweeId;
+    }
+
+    public void setReviewerID(int reviewerID) {
+        this.reviewerID = reviewerID;
+    }
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
 
 }
