@@ -3,9 +3,7 @@ package coms3620.fashion.departments.human_resources.repository;
 import coms3620.fashion.departments.human_resources.Employee;
 import coms3620.fashion.departments.human_resources.Review;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +37,26 @@ public class ReviewRepo {
 
         } catch (IOException e) {
             System.out.println("No existing CSV found.");
+        }
+    }
+
+    public void saveReviews() {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(FILE_NAME))) {
+            pw.println("reviewId,revieweeId,reviewerId,comment,date");
+
+            for (Review r : review) {
+                pw.println(String.join(",",
+                        String.valueOf(r.getReviewId()),
+                        String.valueOf(r.getRevieweeId()),
+                        String.valueOf(r.getReviewerID()),
+                        r.getComment(),
+                        r.getDate()
+                ));
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
