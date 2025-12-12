@@ -15,9 +15,11 @@ public class Logistics extends Menu implements Option {
 
         ManageOrders manageOrders = new ManageOrders(logisticsManager);
         ManageShipments manageShipments = new ManageShipments(logisticsManager);
+        RestockInventory restockInventory = new RestockInventory(logisticsManager);
         
         addOption(manageOrders);
         addOption(manageShipments);
+        addOption(restockInventory);
     }
 
     @Override
