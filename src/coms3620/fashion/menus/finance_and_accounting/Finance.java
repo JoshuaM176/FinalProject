@@ -7,7 +7,6 @@ import coms3620.fashion.menus.Option;
 
 /**
  * Top-level Finance & Accounting menu.
- * Creates the finance submenus and enters the menu loop.
  */
 public class Finance extends Menu implements Option {
 
@@ -19,9 +18,13 @@ public class Finance extends Menu implements Option {
         RecordExpense recordExpense = new RecordExpense(expenseRecorder);
         TransferFunds transferFunds = new TransferFunds(budgetManager);
 
+        // NEW OPTION
+        ApproveBudgetOverrun approveBudgetOverrun = new ApproveBudgetOverrun(budgetManager);
+
         addOption(manageBudget);
         addOption(recordExpense);
         addOption(transferFunds);
+        addOption(approveBudgetOverrun);
     }
 
     @Override
