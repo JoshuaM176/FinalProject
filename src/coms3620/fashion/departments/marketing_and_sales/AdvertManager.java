@@ -191,7 +191,7 @@ public class AdvertManager {
     public void viewAdvertisingRelationships() {
         System.out.println("companyName, approvalStatus contractFile");
         for(AdvertisingRelationship advertisingRelationship : advertisingRelationships) {
-            System.out.println(advertisingRelationship.getName() + ", " + advertisingRelationship.getApprovalStatus());
+            System.out.println(advertisingRelationship.getName() + ", " + advertisingRelationship.getApprovalStatus() + ", " + advertisingRelationship.getContractFile());
         }
     }
 

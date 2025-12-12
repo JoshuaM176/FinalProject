@@ -70,6 +70,10 @@ public class AdvertisingRelationship implements Approvable{
         approvalStatus = status;
     }
 
+    public String getContractFile() {
+        return contractFile;
+    }
+
     public Object[] getRowData() { 
         return new Object[]{"sss", name, approvalStatus, contractFile};
      };
